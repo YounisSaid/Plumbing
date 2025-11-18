@@ -16,7 +16,6 @@
     <Folder Include="FleuntValidation\" />
     <Folder Include="Helpers\" />
     <Folder Include="Middlewares\" />
-    <Folder Include="Servieces\" />
   </ItemGroup>
 
   <ItemGroup>
