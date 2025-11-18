@@ -5,6 +5,7 @@ using RepositoryLayer.Repositories.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,6 +45,11 @@ namespace RepositoryLayer.Repositories.Concrete
         public void Update(TEntity entity)
         {
             _dbSet.Update(entity);
+        }
+
+        public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
+        {
+            return _dbSet.Where(predicate).AsNoTracking().AsQueryable();
         }
     }
 }
