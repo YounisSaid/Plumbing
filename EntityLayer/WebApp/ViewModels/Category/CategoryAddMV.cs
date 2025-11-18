@@ -2,5 +2,6 @@
 {
     public class CategoryAddMV
     {
+        public string Name { get; set; } = null!;
     }
 }
