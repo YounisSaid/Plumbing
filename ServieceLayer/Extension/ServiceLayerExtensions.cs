@@ -9,6 +9,8 @@ namespace ServieceLayer.Extension
         public static IServiceCollection LoadServiceLayerExtensions(this IServiceCollection services)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+
             var types = Assembly.GetExecutingAssembly().GetTypes()
                 .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Service"));
             foreach (var type in types)
