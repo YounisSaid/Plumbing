@@ -35,12 +35,19 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateAbout(int Id)
         {
-            var about = _aboutService.GetByIdAsync(Id);
+            var about = await _aboutService.GetByIdAsync(Id);
 
             return View(about);
         }
-       
-      
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateAbout(AboutUpdateVM model)
+        {
+            await _aboutService.UpdateAboutAsync(model);
+            return RedirectToAction(nameof(GetAboutList), "About", new { Area = "Admin" });
+        }
+
+
         public async Task<IActionResult> DeleteAbout(int Id)
         {
             await _aboutService.DeleteAboutAsync(Id);
