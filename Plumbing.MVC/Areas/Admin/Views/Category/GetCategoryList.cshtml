@@ -1,0 +1,53 @@
+﻿@model List<CategoryListMV>
+@{
+    ViewData["Title"] = "GetCategoryList";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h5 class="card-title"> Category</h5>
+
+<nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        <li class="breadcrumb-item active">Category</li>
+    </ol>
+</nav>
+
+<div class="card">
+    <div class="card-body">
+
+        <!-- Table with hoverable rows -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+
+                    <th scope="col">Name</th>
+                    <th scope="col">Created Date</th>
+                    <th scope="col">Updated Date</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.CreatedAt</td>
+                        <td>@item.UpdatedAt</td>
+                        <td><a asp-area="Admin" asp-controller="Category" asp-action="UpdateCategory" asp-route-id="@item.Id" data-id="@item.Id" class="btn btn-warning btn-sm"> Edit</a></td>
+                        <td><a asp-area="Admin" asp-controller="Category" asp-action="DeleteCategory" asp-route-id="@item.Id" data-id="@item.Id" class="btn btn-danger btn-sm"> Delete</a></td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <td><a asp-area="Admin" asp-controller="Category" asp-action="AddCategory" class="btn btn-success btn-sm"> Add Category</a></td>
+
+        </div>
+</div>
+
+
