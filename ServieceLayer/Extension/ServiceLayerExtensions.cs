@@ -20,7 +20,6 @@ namespace ServieceLayer.Extension
                 {
                     services.AddScoped(interfaceType, type);
                 }
-
             }
             return services;
         }
