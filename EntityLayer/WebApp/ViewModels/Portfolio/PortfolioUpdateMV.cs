@@ -1,4 +1,5 @@
 ﻿using EntityLayer.WebApp.ViewModels.Category;
+using Microsoft.AspNetCore.Http;
 
 namespace EntityLayer.WebApp.ViewModels.Portfolio
 {
@@ -11,6 +12,8 @@ namespace EntityLayer.WebApp.ViewModels.Portfolio
         public string Title { get; set; } = null!;
         public string FileType { get; set; } = null!;
         public string FileName { get; set; } = null!;
+        public IFormFile Photo { get; set; } = null!;
+
         public int CategoryId { get; set; }
         public CategoryUpdateMV Category { get; set; } = null!;
     }
