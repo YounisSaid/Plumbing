@@ -1,4 +1,6 @@
-﻿namespace EntityLayer.WebApp.ViewModels.Team
+﻿using Microsoft.AspNetCore.Http;
+
+namespace EntityLayer.WebApp.ViewModels.Team
 {
     public class TeamUpdateMV
     {
@@ -9,6 +11,7 @@
         public string Title { get; set; } = null!;
         public string FileName { get; set; } = null!;
         public string FileType { get; set; } = null!;
+        public IFormFile Photo { get; set; } = null!;
 
         public string? Twitter { get; set; }
         public string? Facebook { get; set; }
