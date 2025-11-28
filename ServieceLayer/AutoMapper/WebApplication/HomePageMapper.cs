@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using EntityLayer.WebApp.Entites;
-using EntityLayer.WebApp.ViewModels.HomePage;
+using EntityLayer.WebApplication.Entites;
+using EntityLayer.WebApplication.ViewModels.HomePage;
 
-namespace ServieceLayer.AutoMapper.WebApplication
+namespace ServiceLayer.AutoMapper.WebApplication
 {
     public class HomePageMapper : Profile
     {

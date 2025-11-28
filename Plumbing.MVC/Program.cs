@@ -1,5 +1,5 @@
 using RepositoryLayer.Extensions;
-using ServieceLayer.Extension;
+using ServiceLayer.Extension;
 
 namespace Plumbing.MVC
 {

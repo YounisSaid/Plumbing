@@ -1,6 +1,6 @@
-﻿using EntityLayer.WebApp.ViewModels.Team;
+﻿using EntityLayer.WebApplication.ViewModels.Team;
 using Microsoft.AspNetCore.Mvc;
-using ServieceLayer.Serviecs.WebApplication.Abstract;
+using ServiceLayer.Serviecs.WebApplication.Abstract;
 using System.Threading.Tasks;
 
 namespace Plumbing.MVC.Areas.Admin.Controllers

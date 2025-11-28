@@ -1,6 +1,6 @@
-﻿using EntityLayer.WebApp.ViewModels.HomePage;
+﻿using EntityLayer.WebApplication.ViewModels.HomePage;
 
-namespace ServieceLayer.Serviecs.WebApplication.Abstract
+namespace ServiceLayer.Serviecs.WebApplication.Abstract
 {
     public interface IHomePageService
     {

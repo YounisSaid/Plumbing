@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RepositoryLayer\RepositoryLayer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AutoMapper\Identity\" />
+    <Folder Include="Exception\Identity\" />
+    <Folder Include="Exception\WebApplication\" />
+    <Folder Include="Extension\Identity\" />
+    <Folder Include="Extension\WebApplication\" />
+    <Folder Include="Filters\Identity\" />
+	<Folder Include="Filters\WebApplication\" />
+	<Folder Include="FluentValidation\Identity\" />
+    <Folder Include="Helpers\Identity\" />
+    <Folder Include="Helpers\WebApplication\" />
+    <Folder Include="Messages\Identity\" />
+    <Folder Include="Middlewares\Identity\" />
+    <Folder Include="Middlewares\WebApplication\" />
+    <Folder Include="Serviecs\Identity\Abstract\" />
+    <Folder Include="Serviecs\Identity\Concrete\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
+  </ItemGroup>
+
+</Project>

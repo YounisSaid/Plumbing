@@ -1,4 +1,4 @@
-﻿using EntityLayer.WebApp.Entites;
+﻿using EntityLayer.WebApplication.Entites;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 namespace RepositoryLayer.Context

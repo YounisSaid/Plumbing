@@ -1,6 +1,6 @@
-﻿using EntityLayer.WebApp.ViewModels.About;
+﻿using EntityLayer.WebApplication.ViewModels.About;
 
-namespace ServieceLayer.Serviecs.WebApplication.Abstract
+namespace ServiceLayer.Serviecs.WebApplication.Abstract
 {
     public interface IAboutService
     {

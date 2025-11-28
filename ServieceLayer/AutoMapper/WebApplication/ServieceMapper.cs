@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using EntityLayer.WebApp.Entites;
-using EntityLayer.WebApp.ViewModels.Service;
+using EntityLayer.WebApplication.Entites;
+using EntityLayer.WebApplication.ViewModels.Service;
 
-namespace ServieceLayer.AutoMapper.WebApplication
+namespace ServiceLayer.AutoMapper.WebApplication
 {
     public class ServieceMapper : Profile
     {

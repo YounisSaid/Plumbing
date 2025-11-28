@@ -1,6 +1,6 @@
-﻿using EntityLayer.WebApp.ViewModels.Category;
+﻿using EntityLayer.WebApplication.ViewModels.Category;
 
-namespace ServieceLayer.Serviecs.WebApplication.Abstract
+namespace ServiceLayer.Serviecs.WebApplication.Abstract
 {
     public interface ICategoryService
     {

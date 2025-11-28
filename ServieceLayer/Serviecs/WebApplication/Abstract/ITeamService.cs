@@ -1,6 +1,6 @@
-﻿using EntityLayer.WebApp.ViewModels.Team;
+﻿using EntityLayer.WebApplication.ViewModels.Team;
 
-namespace ServieceLayer.Serviecs.WebApplication.Abstract
+namespace ServiceLayer.Serviecs.WebApplication.Abstract
 {
     public interface ITeamService
     {

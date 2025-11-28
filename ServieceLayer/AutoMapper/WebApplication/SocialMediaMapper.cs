@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using EntityLayer.WebApp.Entites;
-using EntityLayer.WebApp.ViewModels.SocialMedia;
+using EntityLayer.WebApplication.Entites;
+using EntityLayer.WebApplication.ViewModels.SocialMedia;
 
-namespace ServieceLayer.AutoMapper.WebApplication
+namespace ServiceLayer.AutoMapper.WebApplication
 {
     public class SocialMediaMapper : Profile
     {

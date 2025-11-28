@@ -1,6 +1,6 @@
-﻿using EntityLayer.WebApp.ViewModels.Portfolio;
+﻿using EntityLayer.WebApplication.ViewModels.Portfolio;
 
-namespace ServieceLayer.Serviecs.WebApplication.Abstract
+namespace ServiceLayer.Serviecs.WebApplication.Abstract
 {
     public interface IPortfolioService
     {

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using EntityLayer.WebApp.Entites;
-using EntityLayer.WebApp.ViewModels.Portfolio;
+using EntityLayer.WebApplication.Entites;
+using EntityLayer.WebApplication.ViewModels.Portfolio;
 
-namespace ServieceLayer.AutoMapper.WebApplication
+namespace ServiceLayer.AutoMapper.WebApplication
 {
     public class PortofolioMapper : Profile
     {

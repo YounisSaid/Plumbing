@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using EntityLayer.WebApp.Entites;
-using EntityLayer.WebApp.ViewModels.About;
+using EntityLayer.WebApplication.Entites;
+using EntityLayer.WebApplication.ViewModels.About;
 
-namespace ServieceLayer.AutoMapper.WebApplication
+namespace ServiceLayer.AutoMapper.WebApplication
 {
     public class AboutMapper : Profile
     {

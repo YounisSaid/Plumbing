@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using EntityLayer.WebApp.Entites;
-using EntityLayer.WebApp.ViewModels.Contact;
+using EntityLayer.WebApplication.Entites;
+using EntityLayer.WebApplication.ViewModels.Contact;
 
-namespace ServieceLayer.AutoMapper.WebApplication
+namespace ServiceLayer.AutoMapper.WebApplication
 {
     public class ContactMapper : Profile
     {

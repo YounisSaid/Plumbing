@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using EntityLayer.WebApp.Entites;
-using EntityLayer.WebApp.ViewModels.Service;
+using EntityLayer.WebApplication.Entites;
+using EntityLayer.WebApplication.ViewModels.Service;
 using Microsoft.EntityFrameworkCore;
 using RepositoryLayer.Repositories.Abstract;
 using RepositoryLayer.UnitOfWorks.Abstract;
-using ServieceLayer.Serviecs.WebApplication.Abstract;
+using ServiceLayer.Serviecs.WebApplication.Abstract;
 
-namespace ServieceLayer.Serviecs.WebApplication.Concrete
+namespace ServiceLayer.Serviecs.WebApplication.Concrete
 {
     public class ServiceService : IServiceService
     {

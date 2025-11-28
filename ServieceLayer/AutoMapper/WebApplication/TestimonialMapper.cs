@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using EntityLayer.WebApp.Entites;
-using EntityLayer.WebApp.ViewModels.Testimonial;
+using EntityLayer.WebApplication.Entites;
+using EntityLayer.WebApplication.ViewModels.Testimonial;
 
-namespace ServieceLayer.AutoMapper.WebApplication
+namespace ServiceLayer.AutoMapper.WebApplication
 {
     public class TestimonialMapper : Profile
     {

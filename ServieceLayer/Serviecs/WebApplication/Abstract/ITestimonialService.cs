@@ -1,6 +1,6 @@
-﻿using EntityLayer.WebApp.ViewModels.Testimonial;
+﻿using EntityLayer.WebApplication.ViewModels.Testimonial;
 
-namespace ServieceLayer.Serviecs.WebApplication.Abstract
+namespace ServiceLayer.Serviecs.WebApplication.Abstract
 {
     public interface ITestimonialService
     {

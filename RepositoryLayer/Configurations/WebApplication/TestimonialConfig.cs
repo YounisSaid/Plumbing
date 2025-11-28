@@ -1,4 +1,4 @@
-﻿using EntityLayer.WebApp.Entites;
+﻿using EntityLayer.WebApplication.Entites;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace RepositoryLayer.Configurations.WebApplication
 {

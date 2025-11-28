@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using EntityLayer.WebApp.Entites;
-using EntityLayer.WebApp.ViewModels.Team;
+using EntityLayer.WebApplication.Entites;
+using EntityLayer.WebApplication.ViewModels.Team;
 
-namespace ServieceLayer.AutoMapper.WebApplication
+namespace ServiceLayer.AutoMapper.WebApplication
 {
     public class TeamMapper : Profile
     {

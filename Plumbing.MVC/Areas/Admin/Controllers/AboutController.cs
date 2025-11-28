@@ -1,6 +1,6 @@
-﻿using EntityLayer.WebApp.ViewModels.About;
+﻿using EntityLayer.WebApplication.ViewModels.About;
 using Microsoft.AspNetCore.Mvc;
-using ServieceLayer.Serviecs.WebApplication.Abstract;
+using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace Plumbing.MVC.Areas.Admin.Controllers
 {

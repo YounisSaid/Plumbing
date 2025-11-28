@@ -2,10 +2,10 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
-using ServieceLayer.FleuntValidation.WebApplication.HomePageValidation;
+using ServiceLayer.FluentValidation.WebApplication.HomePageValidation;
 using System.Reflection;
 
-namespace ServieceLayer.Extension
+namespace ServiceLayer.Extension
 {
     public static class ServiceLayerExtensions
     {

@@ -1,6 +1,6 @@
-﻿using EntityLayer.WebApp.ViewModels.Contact;
+﻿using EntityLayer.WebApplication.ViewModels.Contact;
 
-namespace ServieceLayer.Serviecs.WebApplication.Abstract
+namespace ServiceLayer.Serviecs.WebApplication.Abstract
 {
     public interface IContactService
     {

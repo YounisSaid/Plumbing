@@ -3,5 +3,5 @@
   <Project Path="EntityLayer/EntityLayer.csproj" />
   <Project Path="Plumbing.MVC/Plumbing.MVC.csproj" />
   <Project Path="RepositoryLayer/RepositoryLayer.csproj" />
-  <Project Path="ServieceLayer/ServieceLayer.csproj" />
+  <Project Path="ServieceLayer/ServiceLayer.csproj" />
 </Solution>

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using EntityLayer.WebApp.Entites;
-using EntityLayer.WebApp.ViewModels.Category;
+using EntityLayer.WebApplication.Entites;
+using EntityLayer.WebApplication.ViewModels.Category;
 
-namespace ServieceLayer.AutoMapper.WebApplication
+namespace ServiceLayer.AutoMapper.WebApplication
 {
     public class CategoryMapper : Profile
     {

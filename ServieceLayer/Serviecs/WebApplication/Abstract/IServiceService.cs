@@ -1,6 +1,6 @@
-﻿using EntityLayer.WebApp.ViewModels.Service;
+﻿using EntityLayer.WebApplication.ViewModels.Service;
 
-namespace ServieceLayer.Serviecs.WebApplication.Abstract
+namespace ServiceLayer.Serviecs.WebApplication.Abstract
 {
     public interface IServiceService
     {

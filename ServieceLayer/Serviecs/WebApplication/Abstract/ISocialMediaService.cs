@@ -1,6 +1,6 @@
-﻿using EntityLayer.WebApp.ViewModels.SocialMedia;
+﻿using EntityLayer.WebApplication.ViewModels.SocialMedia;
 
-namespace ServieceLayer.Serviecs.WebApplication.Abstract
+namespace ServiceLayer.Serviecs.WebApplication.Abstract
 {
     public interface ISocialMediaService
     {
