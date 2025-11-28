@@ -14,4 +14,9 @@
     <ProjectReference Include="..\CoreLayer\CoreLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Identity\Entites\" />
+    <Folder Include="Identity\ViewModels\" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,6 @@
 ﻿using EntityLayer.WebApp.ViewModels.HomePage;
 using Microsoft.AspNetCore.Mvc;
-using ServieceLayer.Serviecs.Abstract;
+using ServieceLayer.Serviecs.WebApplication.Abstract;
 using System.Threading.Tasks;
 
 namespace Plumbing.MVC.Areas.Admin.Controllers
