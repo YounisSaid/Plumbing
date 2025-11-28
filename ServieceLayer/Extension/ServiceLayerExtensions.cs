@@ -1,5 +1,8 @@
 ﻿
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
+using ServieceLayer.FleuntValidation.WebApplication.HomePageValidation;
 using System.Reflection;
 
 namespace ServieceLayer.Extension
@@ -21,6 +24,11 @@ namespace ServieceLayer.Extension
                     services.AddScoped(interfaceType, type);
                 }
             }
+
+            services.AddFluentValidationAutoValidation(opt => 
+                                                   opt.DisableDataAnnotationsValidation = true);
+
+            services.AddValidatorsFromAssemblyContaining<HomePageAddValidation>();
             return services;
         }
     }
