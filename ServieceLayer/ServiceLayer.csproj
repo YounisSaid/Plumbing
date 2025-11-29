@@ -14,7 +14,6 @@
     <Folder Include="AutoMapper\Identity\" />
     <Folder Include="Exception\Identity\" />
     <Folder Include="Exception\WebApplication\" />
-    <Folder Include="Extension\Identity\" />
     <Folder Include="Extension\WebApplication\" />
     <Folder Include="Filters\Identity\" />
 	<Folder Include="Filters\WebApplication\" />
