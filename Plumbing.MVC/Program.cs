@@ -28,7 +28,7 @@ namespace Plumbing.MVC
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthorization();
             app.UseAuthorization();
 
             #pragma warning disable ASP0014

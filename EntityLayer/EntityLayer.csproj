@@ -15,8 +15,4 @@
     <ProjectReference Include="..\CoreLayer\CoreLayer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Identity\ViewModels\" />
-  </ItemGroup>
-
 </Project>

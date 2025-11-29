@@ -26,7 +26,7 @@ namespace ServiceLayer.Extension.Identity
             services.ConfigureApplicationCookie(opt =>
             {
                 var newCookie = new CookieBuilder();
-                newCookie.Name = new PathString("PlumbingCompany");
+                newCookie.Name = "PlumbingCompany";
                 opt.Cookie = newCookie;
                 opt.LoginPath = new PathString("/Authentication/Login");
                 opt.LogoutPath = new PathString("/Authentication/LogOut");
