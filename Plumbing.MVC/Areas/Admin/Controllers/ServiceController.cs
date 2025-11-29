@@ -1,4 +1,6 @@
 ﻿using EntityLayer.WebApplication.ViewModels.Service;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 using System.Threading.Tasks;
@@ -9,10 +11,13 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
     public class ServiceController : Controller
     {
         private readonly IServiceService _serviceService;
-
-        public ServiceController(IServiceService serviceService)
+        private readonly IValidator<ServiceAddMV> _serviceAddValidator;
+        private readonly IValidator<ServiceUpdateMV> _serviceUpdateValidator;
+        public ServiceController(IServiceService serviceService, IValidator<ServiceAddMV> serviceAddValidator, IValidator<ServiceUpdateMV> serviceUpdateValidator)
         {
             _serviceService = serviceService;
+            _serviceAddValidator = serviceAddValidator;
+            _serviceUpdateValidator = serviceUpdateValidator;
         }
 
         public async Task<IActionResult> GetServiceList()
@@ -30,6 +35,12 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddService(ServiceAddMV model)
         {
+            var ValidationResult = await _serviceAddValidator.ValidateAsync(model);
+            if (!ValidationResult.IsValid)
+            {
+                ValidationResult.AddToModelState(ModelState);
+                return View(model);
+            }
             await _serviceService.AddServiceAsync(model);
             return RedirectToAction(nameof(GetServiceList), "Service", new { Area = "Admin" });
         }
@@ -44,6 +55,12 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateService(ServiceUpdateMV model)
         {
+            var ValidationResult = await _serviceUpdateValidator.ValidateAsync(model);
+            if (!ValidationResult.IsValid)
+            {
+                ValidationResult.AddToModelState(ModelState);
+                return View(model);
+            }
             await _serviceService.UpdateServiceAsync(model);
             return RedirectToAction(nameof(GetServiceList), "Service", new { Area = "Admin" });
         }

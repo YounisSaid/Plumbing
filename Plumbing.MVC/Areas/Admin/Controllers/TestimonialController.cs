@@ -1,4 +1,6 @@
 ﻿using EntityLayer.WebApplication.ViewModels.Testimonial;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 using System.Threading.Tasks;
@@ -9,10 +11,14 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
     public class TestimonialController : Controller
     {
         private readonly ITestimonialService _testimonialService;
+        private readonly IValidator<TestimonialAddMV> _addValidator;
+        private readonly IValidator<TestimonialUpdateMV> _updateValidator;
 
-        public TestimonialController(ITestimonialService testimonialService)
+        public TestimonialController(ITestimonialService testimonialService, IValidator<TestimonialAddMV> addValidator, IValidator<TestimonialUpdateMV> updateValidator)
         {
             _testimonialService = testimonialService;
+            _addValidator = addValidator;
+            _updateValidator = updateValidator;
         }
 
         public async Task<IActionResult> GetTestimonialList()
@@ -30,6 +36,12 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddTestimonial(TestimonialAddMV model)
         {
+            var ValidationResult = await _addValidator.ValidateAsync(model);
+            if (!ValidationResult.IsValid)
+            {
+                ValidationResult.AddToModelState(ModelState);
+                return View(model);
+            }
             await _testimonialService.AddTestimonialAsync(model);
             return RedirectToAction(nameof(GetTestimonialList), "Testimonial", new { Area = "Admin" });
         }
@@ -44,6 +56,12 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateTestimonial(TestimonialUpdateMV model)
         {
+            var ValidationResult = await _updateValidator.ValidateAsync(model);
+            if (!ValidationResult.IsValid)
+            {
+                ValidationResult.AddToModelState(ModelState);
+                return View(model);
+            }
             await _testimonialService.UpdateTestimonialAsync(model);
             return RedirectToAction(nameof(GetTestimonialList), "Testimonial", new { Area = "Admin" });
         }

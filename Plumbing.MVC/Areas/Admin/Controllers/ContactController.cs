@@ -1,4 +1,7 @@
-﻿using EntityLayer.WebApplication.ViewModels.Contact;
+﻿using EntityLayer.WebApplication.ViewModels.Category;
+using EntityLayer.WebApplication.ViewModels.Contact;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 
@@ -8,9 +11,13 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
     public class ContactController : Controller
     {
         private readonly IContactService _contactService;
-        public ContactController(IContactService contactService)
+        private readonly IValidator<ContactAddMV> _categoryAddValidator;
+        private readonly IValidator<ContactUpdateMV> _categoryUpdateValidator;
+        public ContactController(IContactService contactService,IValidator<ContactAddMV> categoryAddValidator,IValidator<ContactUpdateMV> categoryUpdateValidator)
         {
             _contactService = contactService;
+            _categoryAddValidator = categoryAddValidator;
+            _categoryUpdateValidator = categoryUpdateValidator;
         }
 
         public async Task<IActionResult> GetContactList()
@@ -27,8 +34,15 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddContact(ContactAddMV model)
         {
+            var ValidationResult = await _categoryAddValidator.ValidateAsync(model);
+            if (ValidationResult.IsValid)
+            {
             await _contactService.AddContactAsync(model);
             return RedirectToAction(nameof(GetContactList), "Contact", new { Area = "Admin" });
+               
+            }
+            ValidationResult.AddToModelState(ModelState);
+            return View(model);
         }
 
         [HttpGet]
@@ -42,6 +56,12 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateContact(ContactUpdateMV model)
         {
+            var ValidationResult = await _categoryUpdateValidator.ValidateAsync(model);
+            if (!ValidationResult.IsValid)
+            {
+                ValidationResult.AddToModelState(ModelState);
+                return View(model);
+            }
             await _contactService.UpdateContactAsync(model);
             return RedirectToAction(nameof(GetContactList), "Contact", new { Area = "Admin" });
         }

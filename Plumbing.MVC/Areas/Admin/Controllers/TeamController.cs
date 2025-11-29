@@ -1,4 +1,6 @@
 ﻿using EntityLayer.WebApplication.ViewModels.Team;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 using System.Threading.Tasks;
@@ -9,10 +11,14 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
     public class TeamController : Controller
     {
         private readonly ITeamService _teamService;
+        private readonly IValidator<TeamAddMV> _teamAddValidator;
+        private readonly IValidator<TeamUpdateMV> _teamUpdateValidator;
 
-        public TeamController(ITeamService teamService)
+        public TeamController(ITeamService teamService, IValidator<TeamAddMV> teamAddValidator, IValidator<TeamUpdateMV> teamUpdateValidator)
         {
             _teamService = teamService;
+            _teamAddValidator = teamAddValidator;
+            _teamUpdateValidator = teamUpdateValidator;
         }
 
         public async Task<IActionResult> GetTeamList()
@@ -30,6 +36,12 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddTeam(TeamAddMV model)
         {
+            var ValidationResult = await _teamAddValidator.ValidateAsync(model);
+            if (!ValidationResult.IsValid)
+            {
+                ValidationResult.AddToModelState(ModelState);
+                return View(model);
+            }
             await _teamService.AddTeamAsync(model);
             return RedirectToAction(nameof(GetTeamList), "Team", new { Area = "Admin" });
         }
@@ -44,6 +56,12 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateTeam(TeamUpdateMV model)
         {
+            var ValidationResult = await _teamUpdateValidator.ValidateAsync(model);
+            if (!ValidationResult.IsValid)
+            {
+                ValidationResult.AddToModelState(ModelState);
+                return View(model);
+            }
             await _teamService.UpdateTeamAsync(model);
             return RedirectToAction(nameof(GetTeamList), "Team", new { Area = "Admin" });
         }

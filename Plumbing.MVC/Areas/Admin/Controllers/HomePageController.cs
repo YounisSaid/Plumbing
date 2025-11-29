@@ -1,4 +1,7 @@
-﻿using EntityLayer.WebApplication.ViewModels.HomePage;
+﻿using EntityLayer.WebApplication.ViewModels.Contact;
+using EntityLayer.WebApplication.ViewModels.HomePage;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 using System.Threading.Tasks;
@@ -9,10 +12,13 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
     public class HomePageController : Controller
     {
         private readonly IHomePageService _homePageService;
-
-        public HomePageController(IHomePageService homePageService)
+        private readonly IValidator<HomePageAddMV> _homePageAddValidator;
+        private readonly IValidator<HomePageUpdateMV> _homePageUpdateValidator;
+        public HomePageController(IHomePageService homePageService,IValidator<HomePageAddMV> homePageAddValidator,IValidator<HomePageUpdateMV> homePageUpdateValidator)
         {
             _homePageService = homePageService;
+            _homePageAddValidator = homePageAddValidator;
+            _homePageUpdateValidator = homePageUpdateValidator;
         }
 
         public async Task<IActionResult> GetHomePageList()
@@ -30,8 +36,15 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddHomePage(HomePageAddMV model)
         {
-            await _homePageService.AddHomePageAsync(model);
-            return RedirectToAction(nameof(GetHomePageList), "HomePage", new { Area = "Admin" });
+            var ValidationResult = await _homePageAddValidator.ValidateAsync(model);
+            if (ValidationResult.IsValid)
+            {
+                await _homePageService.AddHomePageAsync(model);
+                return RedirectToAction(nameof(GetHomePageList), "HomePage", new { Area = "Admin" });
+            }
+
+            ValidationResult.AddToModelState(ModelState);
+            return View(model);
         }
 
         [HttpGet]
@@ -44,6 +57,12 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateHomePage(HomePageUpdateMV model)
         {
+            var ValidationResult = await _homePageUpdateValidator.ValidateAsync(model);
+            if (!ValidationResult.IsValid)
+            {
+                ValidationResult.AddToModelState(ModelState);
+                return View(model);
+            }
             await _homePageService.UpdateHomePageAsync(model);
             return RedirectToAction(nameof(GetHomePageList), "HomePage", new { Area = "Admin" });
         }

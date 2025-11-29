@@ -1,4 +1,6 @@
 ﻿using EntityLayer.WebApplication.ViewModels.About;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 
@@ -8,9 +10,14 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
     public class AboutController : Controller
     {
         private readonly IAboutService _aboutService;
-        public AboutController(IAboutService aboutService)
+        private readonly IValidator<AboutAddVM> _aboutAddValidator;
+        private readonly IValidator<AboutUpdateVM> _aboutUpdateValidator;
+
+        public AboutController(IAboutService aboutService,IValidator<AboutAddVM> aboutAddValidator,IValidator<AboutUpdateVM> aboutUpdateValidator)
         {
             _aboutService = aboutService;
+            _aboutAddValidator = aboutAddValidator;
+            _aboutUpdateValidator = aboutUpdateValidator;
         }
       
 
@@ -28,8 +35,15 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAbout(AboutAddVM model)
         {
+            var ValidationResult = await _aboutAddValidator.ValidateAsync(model);
+            if (ValidationResult.IsValid)
+            {
             await _aboutService.AddAboutAsync(model);
             return RedirectToAction(nameof(GetAboutList), "About", new { Area = "Admin" });
+               
+            }
+            ValidationResult.AddToModelState(ModelState);
+            return View(model);
         }
 
         [HttpGet]
@@ -43,8 +57,14 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateAbout(AboutUpdateVM model)
         {
-            await _aboutService.UpdateAboutAsync(model);
-            return RedirectToAction(nameof(GetAboutList), "About", new { Area = "Admin" });
+            var ValidationResult = await _aboutUpdateValidator.ValidateAsync(model);
+            if (ValidationResult.IsValid)
+            {
+                await _aboutService.UpdateAboutAsync(model);
+                return RedirectToAction(nameof(GetAboutList), "About", new { Area = "Admin" });
+            }
+            ValidationResult.AddToModelState(ModelState);
+            return View(model);
         }
 
 

@@ -1,4 +1,7 @@
-﻿using EntityLayer.WebApplication.ViewModels.Category;
+﻿using EntityLayer.WebApplication.ViewModels.About;
+using EntityLayer.WebApplication.ViewModels.Category;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 
@@ -9,9 +12,13 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
     {
 
         private readonly ICategoryService _categoryService;
-        public CategoryController(ICategoryService categoryService)
+        private readonly IValidator<CategoryAddMV> _categoryAddValidator;
+        private readonly IValidator<CategoryUpdateMV> _categoryUpdateValidator;
+        public CategoryController(ICategoryService categoryService,IValidator<CategoryAddMV> categoryAddValidator,IValidator<CategoryUpdateMV> categoryUpdateValidator)
         {
             _categoryService = categoryService;
+            _categoryAddValidator = categoryAddValidator;
+            _categoryUpdateValidator = categoryUpdateValidator;
         }
 
         public async Task<IActionResult> GetCategoryList()
@@ -29,9 +36,14 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCategory(CategoryAddMV model)
         {
-
-            await _categoryService.AddCategoryAsync(model);
-            return RedirectToAction(nameof(GetCategoryList), "Category", new { Area = "Admin" });
+            var ValidationResult = await _categoryAddValidator.ValidateAsync(model);
+            if (ValidationResult.IsValid)
+            {
+                await _categoryService.AddCategoryAsync(model);
+                return RedirectToAction(nameof(GetCategoryList), "Category", new { Area = "Admin" });
+            }
+            ValidationResult.AddToModelState(ModelState);
+            return View(model);
         }
 
         [HttpGet]
@@ -45,8 +57,15 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateCategory(CategoryUpdateMV model)
         {
-            await _categoryService.UpdateCategoryAsync(model);
-            return RedirectToAction(nameof(GetCategoryList), "Category", new { Area = "Admin" });
+            var ValidationResult = await _categoryUpdateValidator.ValidateAsync(model);
+            if (ValidationResult.IsValid)
+            {
+                await _categoryService.UpdateCategoryAsync(model);
+                return RedirectToAction(nameof(GetCategoryList), "Category", new { Area = "Admin" });
+            }
+                ValidationResult.AddToModelState(ModelState);
+                return View(model);
+           
         }
 
         public async Task<IActionResult> DeleteCategory(int Id)
