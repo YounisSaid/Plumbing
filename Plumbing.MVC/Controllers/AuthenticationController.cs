@@ -5,7 +5,9 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using ServiceLayer.Helpers.Identity;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+using ServiceLayer.Helpers.Identity.ModelStateHelper;
+using System.Threading.Tasks;
 
 namespace Plumbing.MVC.Controllers
 {
@@ -15,6 +17,7 @@ namespace Plumbing.MVC.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IValidator<SignUpVM> _signUpValidator;
         private readonly IValidator<LoginMV> _loginValidator;
+        private readonly IValidator<ForgetPasswordMV> _ForgetPasswordValidator;
         private readonly IMapper _mapper;
 
         public AuthenticationController(UserManager<AppUser> userManager,
@@ -100,6 +103,31 @@ namespace Plumbing.MVC.Controllers
             ViewBag.Result = "FailedAttempt";
             ModelState.AddModelStateListErrors(new List<string> { $"Email or Password Is Wrong!! Failed Attempts : {await _userManager.GetAccessFailedCountAsync(user)} /5" });
             return View(input);
+        }
+
+        [HttpGet]
+        public IActionResult ForgetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgetPassword(ForgetPasswordMV input)
+        {
+            var validator = await _ForgetPasswordValidator.ValidateAsync(input);
+            if(!validator.IsValid)
+            {
+                validator.AddToModelState(ModelState);
+                return View(input);
+            }
+            var user = await _userManager.FindByEmailAsync(input.Email);
+            if (user == null)
+            {
+                ViewBag.Result = "UserNotFound";
+                ModelState.AddModelStateListErrors(new List<string> { "User is Not Found!!" });
+                return View(input);
+            }
+            return View();
         }
     }
 }
