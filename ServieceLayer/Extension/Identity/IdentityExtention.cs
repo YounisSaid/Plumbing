@@ -17,6 +17,8 @@ namespace ServiceLayer.Extension.Identity
                     options.Password.RequiredUniqueChars = 3;
                     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(60);
                     options.Lockout.MaxFailedAccessAttempts = 5;
+                    options.User.RequireUniqueEmail = true;
+
                 })
                 .AddRoleManager<RoleManager<AppRole>>()
                 .AddEntityFrameworkStores<AppDbContext>()

@@ -72,7 +72,6 @@ namespace Plumbing.MVC.Controllers
             var validator = await _loginValidator.ValidateAsync(input);
             if(!validator.IsValid)
             {
-                ViewBag.Result = "Failed";
                 validator.AddToModelState(ModelState);
                 return View(input);
             }
