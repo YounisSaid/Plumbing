@@ -12,13 +12,21 @@ namespace Plumbing.MVC.Controllers
     public class AuthenticationController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly IValidator<SignUpVM> _validator;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly IValidator<SignUpVM> _signUpValidator;
+        private readonly IValidator<LoginMV> _loginValidator;
         private readonly IMapper _mapper;
 
-        public AuthenticationController(UserManager<AppUser> userManager, IValidator<SignUpVM> validator, IMapper mapper)
+        public AuthenticationController(UserManager<AppUser> userManager,
+                                        SignInManager<AppUser> signInManager, 
+                                        IValidator<SignUpVM> signUpValidator,
+                                        IValidator<LoginMV> loginValidator,
+                                        IMapper mapper)
         {
             _userManager = userManager;
-            _validator = validator;
+            _signInManager = signInManager;
+            _signUpValidator = signUpValidator;
+            _loginValidator = loginValidator;
             _mapper = mapper;
         }
 
@@ -31,9 +39,10 @@ namespace Plumbing.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> SignUp(SignUpVM input)
         {
-            var validator = await _validator.ValidateAsync(input);
+            var validator = await _signUpValidator.ValidateAsync(input);
             if(!validator.IsValid)
             {
+                
                 validator.AddToModelState(ModelState);
                 return View(input);
             }
@@ -42,11 +51,56 @@ namespace Plumbing.MVC.Controllers
             var userCreatedResult = await _userManager.CreateAsync(user,input.Password);
             if(!userCreatedResult.Succeeded)
             {
+                ViewBag.Result = "Failed";
                 ModelState.AddModelStateListErrors(userCreatedResult.Errors);
                 return View(input);
             }
 
             return RedirectToAction("Login", "Authentication");
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> Login(LoginMV input, string? returnUrl = null)
+        {
+            returnUrl =  returnUrl ?? Url.Action("Index","Dashboard",new {Area = "Admin"});
+
+            var validator = await _loginValidator.ValidateAsync(input);
+            if(!validator.IsValid)
+            {
+                ViewBag.Result = "Failed";
+                validator.AddToModelState(ModelState);
+                return View(input);
+            }
+
+            var user = await _userManager.FindByEmailAsync(input.Email);
+            if(user == null)
+            {
+                ViewBag.Result = "Failed";
+                ModelState.AddModelStateListErrors(new List<string>{"Email or Password Is Wrong!!"});
+                return View(input);
+            }
+
+            var loginResult = await _signInManager.PasswordSignInAsync(user, input.Password, input.RememberMe, true);
+            if(loginResult.Succeeded)
+            {
+                return Redirect(returnUrl!);
+            }
+
+            if(loginResult.IsLockedOut)
+            {
+                ViewBag.Result = "LockedOut";
+                ModelState.AddModelStateListErrors(new List<string> { "Your Account is Locked Out For 60 Seconds !!" });
+                return View(input);
+            }
+
+            ViewBag.Result = "FailedAttempt";
+            ModelState.AddModelStateListErrors(new List<string> { $"Email or Password Is Wrong!! Failed Attempts : {await _userManager.GetAccessFailedCountAsync(user)} /5" });
+            return View(input);
         }
     }
 }

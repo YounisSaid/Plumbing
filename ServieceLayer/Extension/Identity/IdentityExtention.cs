@@ -15,7 +15,7 @@ namespace ServiceLayer.Extension.Identity
                     options.Password.RequiredLength = 10;
                     options.Password.RequireNonAlphanumeric = true;
                     options.Password.RequiredUniqueChars = 3;
-                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(60);
                     options.Lockout.MaxFailedAccessAttempts = 5;
                 })
                 .AddRoleManager<RoleManager<AppRole>>()
