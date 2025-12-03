@@ -1,14 +1,17 @@
 ﻿using EntityLayer.Identity.Entites;
+using EntityLayer.Identity.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RepositoryLayer.Context;
+using ServiceLayer.Helpers.Identity.EmailHelper;
 
 namespace ServiceLayer.Extension.Identity
 {
     public static class IdentityExtention
     {
-        public static IServiceCollection LoadIdentityExtention(this IServiceCollection services)
+        public static IServiceCollection LoadIdentityExtention(this IServiceCollection services,IConfiguration configuration)
         {
             services.AddIdentity<AppUser, AppRole>(options =>
                 {
@@ -35,6 +38,11 @@ namespace ServiceLayer.Extension.Identity
                 opt.AccessDeniedPath = new PathString("/Authentication/AccessDenied");
                 opt.ExpireTimeSpan = TimeSpan.FromMinutes(60);
             });
+            services.AddScoped<IEmailSendMethodHelper, EmailSendMethodHelper>();
+
+            services.Configure<DataProtectionTokenProviderOptions>(opt=>
+                                                                   opt.TokenLifespan = TimeSpan.FromMinutes(60));
+            services.Configure<GmailInformationVM>(configuration.GetSection("EmailSettings"));
 
             return services;
         }

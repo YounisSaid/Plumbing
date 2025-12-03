@@ -3,9 +3,11 @@ using EntityLayer.Identity.Entites;
 using EntityLayer.Identity.ViewModels;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using FluentValidation.Validators;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+using ServiceLayer.Helpers.Identity.EmailHelper;
 using ServiceLayer.Helpers.Identity.ModelStateHelper;
 using System.Threading.Tasks;
 
@@ -19,18 +21,23 @@ namespace Plumbing.MVC.Controllers
         private readonly IValidator<LoginMV> _loginValidator;
         private readonly IValidator<ForgetPasswordMV> _ForgetPasswordValidator;
         private readonly IMapper _mapper;
+        private readonly IEmailSendMethodHelper _emailSendMethodHelper;
 
         public AuthenticationController(UserManager<AppUser> userManager,
                                         SignInManager<AppUser> signInManager, 
                                         IValidator<SignUpVM> signUpValidator,
-                                        IValidator<LoginMV> loginValidator,
-                                        IMapper mapper)
+                                        IValidator<LoginMV> loginValidator, 
+                                        IValidator<ForgetPasswordMV> forgetPasswordValidator,
+                                        IMapper mapper,
+                                        IEmailSendMethodHelper emailSendMethodHelper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _signUpValidator = signUpValidator;
             _loginValidator = loginValidator;
+            _ForgetPasswordValidator = forgetPasswordValidator;
             _mapper = mapper;
+            _emailSendMethodHelper = emailSendMethodHelper;
         }
 
         [HttpGet]
@@ -127,7 +134,14 @@ namespace Plumbing.MVC.Controllers
                 ModelState.AddModelStateListErrors(new List<string> { "User is Not Found!!" });
                 return View(input);
             }
-            return View();
+           
+            string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var passwordResetLink = Url.Action("ResetPassword", "Authentication", new {UserId = user.Id,Token = resetToken,HttpContext.Request.Scheme});
+
+            await _emailSendMethodHelper.SendPasswordResetLinkWithToken(passwordResetLink!, input.Email);
+
+            return RedirectToAction("Login", "Authentication");
         }
     }
 }
