@@ -60,7 +60,7 @@ namespace ServiceLayer.Helpers.Identity.EmailHelper
         </div>
         
         <p style='font-size: 14px; color: #777;'>
-            If you did not request a password reset, please ignore this email. This link will expire in **{expirationTime}**.
+            If you did not request a password reset, please ignore this email. This link will expire in {expirationTime}.
         </p>
         
         <p style='font-size: 14px; color: #777;'>

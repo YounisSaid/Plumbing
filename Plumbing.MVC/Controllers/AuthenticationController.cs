@@ -22,6 +22,7 @@ namespace Plumbing.MVC.Controllers
         private readonly IValidator<ForgetPasswordMV> _ForgetPasswordValidator;
         private readonly IMapper _mapper;
         private readonly IEmailSendMethodHelper _emailSendMethodHelper;
+        private readonly IValidator<ResetPasswordVM> _resetPasswordValidator;
 
         public AuthenticationController(UserManager<AppUser> userManager,
                                         SignInManager<AppUser> signInManager, 
@@ -29,7 +30,8 @@ namespace Plumbing.MVC.Controllers
                                         IValidator<LoginMV> loginValidator, 
                                         IValidator<ForgetPasswordMV> forgetPasswordValidator,
                                         IMapper mapper,
-                                        IEmailSendMethodHelper emailSendMethodHelper)
+                                        IEmailSendMethodHelper emailSendMethodHelper,
+                                        IValidator<ResetPasswordVM> resetPasswordValidator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -38,6 +40,7 @@ namespace Plumbing.MVC.Controllers
             _ForgetPasswordValidator = forgetPasswordValidator;
             _mapper = mapper;
             _emailSendMethodHelper = emailSendMethodHelper;
+            _resetPasswordValidator = resetPasswordValidator;
         }
 
         [HttpGet]
@@ -137,11 +140,72 @@ namespace Plumbing.MVC.Controllers
            
             string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            var passwordResetLink = Url.Action("ResetPassword", "Authentication", new {UserId = user.Id,Token = resetToken,HttpContext.Request.Scheme});
+            var passwordResetLink = Url.Action("ResetPassword", "Authentication", new { UserId = user.Id, Token = resetToken },HttpContext.Request.Scheme);
 
             await _emailSendMethodHelper.SendPasswordResetLinkWithToken(passwordResetLink!, input.Email);
 
             return RedirectToAction("Login", "Authentication");
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string UserId, string Token, List<string>errors)
+        {
+            TempData["Id"] = UserId;
+            TempData["Token"] = Token;
+
+            if(errors.Any())
+            {
+                ViewBag.Result = "Error";
+                ModelState.AddModelStateListErrors(errors);
+            }
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordVM input)
+        {
+            var token = TempData["Token"];
+            var id = TempData["Id"];
+
+            if(token == null || id == null)
+            {
+                // Invalid ID or TOKEN
+                //Toaster Message Later
+               return  RedirectToAction("Login", "Authentication");
+            }
+
+            var validator = await _resetPasswordValidator.ValidateAsync(input);
+            if(!validator.IsValid)
+            {
+                List<string> errors = validator.Errors.Select(x => x.ErrorMessage).ToList();
+                return RedirectToAction("ResetPassword", "Authentication", new { UserId = id, Token = token, errors });
+            }
+
+            var user = await _userManager.FindByIdAsync(id!.ToString()!);
+            if(user == null)
+            {
+                // Invalid ID or TOKEN
+                //Toaster Message Later
+                return RedirectToAction("Login", "Authentication");
+            }
+
+            var resetPasswordResult = await _userManager.ResetPasswordAsync(user!, token!.ToString()!, input.Password);
+            if(resetPasswordResult.Succeeded)
+            {
+                //Toaster Message Later
+                return RedirectToAction("Login", "Authentication");
+            }
+            else
+            {
+               List<string> errors = validator.Errors.Select(x => x.ErrorMessage).ToList();
+                return RedirectToAction("ResetPassword", "Authentication", new { UserId = user.Id, Token = token, errors });
+            }
+
+
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }
