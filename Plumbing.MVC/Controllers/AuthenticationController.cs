@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using ServiceLayer.Helpers.Identity.EmailHelper;
 using ServiceLayer.Helpers.Identity.ModelStateHelper;
+using ServiceLayer.Serviecs.Identity.Abstract;
 using System.Threading.Tasks;
 
 namespace Plumbing.MVC.Controllers
@@ -21,8 +22,8 @@ namespace Plumbing.MVC.Controllers
         private readonly IValidator<LoginMV> _loginValidator;
         private readonly IValidator<ForgetPasswordMV> _ForgetPasswordValidator;
         private readonly IMapper _mapper;
-        private readonly IEmailSendMethodHelper _emailSendMethodHelper;
         private readonly IValidator<ResetPasswordVM> _resetPasswordValidator;
+        private readonly IAuthenticationCustomService _authenticationCustomService;
 
         public AuthenticationController(UserManager<AppUser> userManager,
                                         SignInManager<AppUser> signInManager, 
@@ -30,8 +31,8 @@ namespace Plumbing.MVC.Controllers
                                         IValidator<LoginMV> loginValidator, 
                                         IValidator<ForgetPasswordMV> forgetPasswordValidator,
                                         IMapper mapper,
-                                        IEmailSendMethodHelper emailSendMethodHelper,
-                                        IValidator<ResetPasswordVM> resetPasswordValidator)
+                                        IValidator<ResetPasswordVM> resetPasswordValidator,
+                                        IAuthenticationCustomService authenticationCustomService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -39,8 +40,8 @@ namespace Plumbing.MVC.Controllers
             _loginValidator = loginValidator;
             _ForgetPasswordValidator = forgetPasswordValidator;
             _mapper = mapper;
-            _emailSendMethodHelper = emailSendMethodHelper;
             _resetPasswordValidator = resetPasswordValidator;
+            _authenticationCustomService = authenticationCustomService;
         }
 
         [HttpGet]
@@ -137,12 +138,8 @@ namespace Plumbing.MVC.Controllers
                 ModelState.AddModelStateListErrors(new List<string> { "User is Not Found!!" });
                 return View(input);
             }
-           
-            string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            var passwordResetLink = Url.Action("ResetPassword", "Authentication", new { UserId = user.Id, Token = resetToken },HttpContext.Request.Scheme);
-
-            await _emailSendMethodHelper.SendPasswordResetLinkWithToken(passwordResetLink!, input.Email);
+            await _authenticationCustomService.CreatePasswordCardentialsAndSend(user, HttpContext, input.Email, Url);
 
             return RedirectToAction("Login", "Authentication");
         }
