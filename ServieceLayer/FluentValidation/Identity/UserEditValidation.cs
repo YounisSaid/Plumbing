@@ -20,7 +20,7 @@ namespace ServiceLayer.FluentValidation.Identity
             RuleFor(x => x.Password).NotEmpty().WithMessage(ValidationMessages.NullEmptyMessage("Password"))
                                     .NotNull().WithMessage(ValidationMessages.NullEmptyMessage("Password"));
 
-            RuleFor(x => x.ConfirmNewPassword).Equal(x => x.Password).WithMessage(IdentityValidationMessages.ComaprePassword());
+            RuleFor(x => x.ConfirmNewPassword).Equal(x => x.NewPassword).WithMessage(IdentityValidationMessages.ComaprePassword());
 
 
         }
