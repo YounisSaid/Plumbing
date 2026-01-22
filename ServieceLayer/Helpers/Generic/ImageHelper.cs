@@ -47,7 +47,7 @@ namespace ServiceLayer.Helpers.Generic
 
             // check for jpg or jpeg or png
             string fileExtention = Path.Combine(imageFile.Name).ToLower();
-            if (fileExtention == null && fileExtention != "jpg" || fileExtention != "jpeg"||fileExtention != "png")
+            if (fileExtention == null && fileExtention != ".jpg" || fileExtention != ".jpeg"||fileExtention != ".png")
                 return  new UploadImageModel { Error = "Photo Must be in jpg or jpeg or png" };
 
             // get file name
@@ -63,7 +63,16 @@ namespace ServiceLayer.Helpers.Generic
             // Make sure that Buffer is Empty
             await stream.FlushAsync();
             
-            return new UploadImageModel {FileName = newFileName,FileType= imageFile.ContentType};
+            return new UploadImageModel {FileName = $"{folderName}/{newFileName}",FileType= imageFile.ContentType};
+        }
+
+        public string DeleteImage(string name)
+        {
+            var imageToDelete = Path.Combine($"{wwwroot}/{imageFolder}/{name}");
+            if(File.Exists(imageToDelete))
+                File.Delete(imageToDelete);
+
+            return "Image is Deleted Succsessfuly";
         }
     }
 }
