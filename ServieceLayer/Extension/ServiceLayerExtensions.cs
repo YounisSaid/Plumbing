@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceLayer.Extension.Identity;
 using ServiceLayer.FluentValidation.WebApplication.HomePageValidation;
+using ServiceLayer.Helpers.Generic;
 using System.Reflection;
 
 namespace ServiceLayer.Extension
@@ -15,7 +16,6 @@ namespace ServiceLayer.Extension
         {
             services.LoadIdentityExtention(configuration);
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
 
             var types = Assembly.GetExecutingAssembly().GetTypes()
                 .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Service"));
@@ -32,6 +32,9 @@ namespace ServiceLayer.Extension
                                                    opt.DisableDataAnnotationsValidation = true);
 
             services.AddValidatorsFromAssemblyContaining<HomePageAddValidation>();
+            services.AddScoped<IImageHelper, ImageHelper>();
+
+
             return services;
         }
     }

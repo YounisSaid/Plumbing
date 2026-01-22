@@ -2,6 +2,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using ServiceLayer.Helpers.Generic;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace Plumbing.MVC.Areas.Admin.Controllers
@@ -12,12 +13,14 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         private readonly IAboutService _aboutService;
         private readonly IValidator<AboutAddVM> _aboutAddValidator;
         private readonly IValidator<AboutUpdateVM> _aboutUpdateValidator;
+       
 
         public AboutController(IAboutService aboutService,IValidator<AboutAddVM> aboutAddValidator,IValidator<AboutUpdateVM> aboutUpdateValidator)
         {
             _aboutService = aboutService;
             _aboutAddValidator = aboutAddValidator;
             _aboutUpdateValidator = aboutUpdateValidator;
+            
         }
       
 

@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using EntityLayer.Enumerates;
 using EntityLayer.WebApplication.Entites;
 using EntityLayer.WebApplication.ViewModels.About;
 using Microsoft.EntityFrameworkCore;
 using RepositoryLayer.Repositories.Abstract;
 using RepositoryLayer.UnitOfWorks.Abstract;
+using ServiceLayer.Helpers.Generic;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace ServiceLayer.Serviecs.WebApplication.Concrete
@@ -14,11 +16,13 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
         private readonly IUnitOfWork _unitOfWork;  
         private readonly IMapper _mapper;
         private readonly IGenericRepository<About> _aboutRepository;
-        public AboutService(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly IImageHelper _imageHelper;
+        public AboutService(IUnitOfWork unitOfWork, IMapper mapper,IImageHelper imageHelper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _aboutRepository = _unitOfWork.GetRepository<About>();
+            _imageHelper = imageHelper;
         }
 
         public async Task<List<AboutListMV>> GetAllListAsync()
@@ -37,6 +41,9 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
 
         public async Task AddAboutAsync(AboutAddVM addVM)
         {
+            var test = await _imageHelper.UploadImage(null, addVM.Photo, imageType.about);
+            addVM.FileName = test.FileName!;
+            addVM.FileType = test.FileType!;
             var about = _mapper.Map<About>(addVM);
             await _aboutRepository.AddAsync(about);
             await _unitOfWork.CommitAsync();

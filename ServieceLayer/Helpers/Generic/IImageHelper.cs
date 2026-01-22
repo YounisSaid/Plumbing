@@ -6,7 +6,7 @@ namespace ServiceLayer.Helpers.Generic
 {
     public interface IImageHelper
     {
-        public Task<UploadImageModel> UploadImage(string name, string folderName, IFormFile imageFile, imageType fileType);
+        public Task<UploadImageModel> UploadImage(string? folderName, IFormFile imageFile, imageType fileType);
         public string DeleteImage(string name);
 
     }
