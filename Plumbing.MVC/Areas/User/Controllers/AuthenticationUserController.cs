@@ -106,6 +106,7 @@ namespace Plumbing.MVC.Areas.User.Controllers
                 await _signInManager.SignOutAsync();
                 await _signInManager.SignInAsync(user, isPersistent: false);
             }
+            ViewBag.Username = user.UserName;
             return View();
         }
 

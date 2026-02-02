@@ -44,6 +44,9 @@
 
         <ul class="sidebar-nav" id="sidebar-nav">
 
+
+            @await Component.InvokeAsync("Layout",ViewBag.Username);
+
             <li class="nav-item">
                 <a class="nav-link" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
                     <i class="bi bi-grid"></i>
