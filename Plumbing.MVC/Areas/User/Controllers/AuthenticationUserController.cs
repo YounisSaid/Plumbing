@@ -6,8 +6,6 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ServiceLayer.Helpers.Identity.ModelStateHelper;
 
 namespace Plumbing.MVC.Areas.User.Controllers
@@ -21,7 +19,7 @@ namespace Plumbing.MVC.Areas.User.Controllers
         private readonly IValidator<UserEditMV> _userEditValidator;
         private readonly SignInManager<AppUser> _signInManager;
 
-        public AuthenticationUserController(UserManager<AppUser> userManager, IMapper mapper, IValidator<UserEditMV> userEditValidator,SignInManager<AppUser> signInManager)
+        public AuthenticationUserController(UserManager<AppUser> userManager, IMapper mapper, IValidator<UserEditMV> userEditValidator, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
             _mapper = mapper;
@@ -41,23 +39,23 @@ namespace Plumbing.MVC.Areas.User.Controllers
         {
             var user = await _userManager.FindByNameAsync(User.Identity!.Name!);
             var validator = await _userEditValidator.ValidateAsync(input);
-            if(!validator.IsValid)
+            if (!validator.IsValid)
             {
                 validator.AddToModelState(ModelState);
                 return View(input);
             }
 
-            var checkPassword = await _userManager.CheckPasswordAsync(user!,input.Password);
-            if(!checkPassword)
+            var checkPassword = await _userManager.CheckPasswordAsync(user!, input.Password);
+            if (!checkPassword)
             {
                 ViewBag.Result = "WrongPassword";
                 ModelState.AddModelStateListErrors(new List<string>() { "Password is Wrong!!!" });
                 return View(input);
             }
-            if(input.NewPassword != null)
+            if (input.NewPassword != null)
             {
-                var PasswordChange = await _userManager.ChangePasswordAsync(user!,input.Password,input.NewPassword!);
-                if(!PasswordChange.Succeeded)
+                var PasswordChange = await _userManager.ChangePasswordAsync(user!, input.Password, input.NewPassword!);
+                if (!PasswordChange.Succeeded)
                 {
                     ViewBag.Result = "NewPasswordFailed";
                     ModelState.AddModelStateListErrors(PasswordChange.Errors);
@@ -67,7 +65,7 @@ namespace Plumbing.MVC.Areas.User.Controllers
             var oldFileName = user!.FileName;
             var oldFileType = user.FileType;
 
-            if(input.Photo != null)
+            if (input.Photo != null)
             {
                 input.FileName = DateTime.Now.ToString();
                 input.FileType = DateTime.Now.ToString();
@@ -80,11 +78,11 @@ namespace Plumbing.MVC.Areas.User.Controllers
 
             var mappedUser = _mapper.Map(input, user);
             var userUpdate = await _userManager.UpdateAsync(mappedUser);
-            if(userUpdate.Succeeded)
+            if (userUpdate.Succeeded)
             {
-                if(input.Photo != null)
+                if (input.Photo != null)
                 {
-                    if(oldFileName !=null)
+                    if (oldFileName != null)
                     {
                         //Delete Photo Logic
                     }
@@ -95,7 +93,7 @@ namespace Plumbing.MVC.Areas.User.Controllers
                 return RedirectToAction("Index", "Dashboard", new { Area = "User" });
             }
 
-            if(input.FileName != null)
+            if (input.FileName != null)
             {
                 //Delete New Photo if Failed
             }
@@ -112,6 +110,6 @@ namespace Plumbing.MVC.Areas.User.Controllers
 
 
 
-        }
     }
+}
 

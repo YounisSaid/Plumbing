@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Helpers.Identity.EmailHelper;
 using ServiceLayer.Serviecs.Identity.Abstract;
-using System;
 
 namespace ServiceLayer.Serviecs.Identity.Concrete
 {

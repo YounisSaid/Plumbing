@@ -1,5 +1,4 @@
-﻿using EntityLayer.WebApplication.ViewModels.About;
-using EntityLayer.WebApplication.ViewModels.Category;
+﻿using EntityLayer.WebApplication.ViewModels.Category;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;

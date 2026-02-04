@@ -3,7 +3,6 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
-using System.Threading.Tasks;
 
 namespace Plumbing.MVC.Areas.Admin.Controllers
 {

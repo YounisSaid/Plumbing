@@ -12,15 +12,15 @@ namespace ServiceLayer.FluentValidation.WebApplication.AboutValidation
             RuleFor(x => x.Header)
                 .NotEmpty().WithMessage(ValidationMessages.NullEmptyMessage("Header"))
                 .NotNull().WithMessage(ValidationMessages.NullEmptyMessage("Header"))
-                .MaximumLength(200).WithMessage(ValidationMessages.MaximumCharachterAllowence("Header",200));
-            RuleFor(x=>x.Description)
+                .MaximumLength(200).WithMessage(ValidationMessages.MaximumCharachterAllowence("Header", 200));
+            RuleFor(x => x.Description)
                 .NotEmpty().WithMessage(ValidationMessages.NullEmptyMessage("Description"))
                 .NotNull().WithMessage(ValidationMessages.NullEmptyMessage("Description"))
                 .MaximumLength(5000).WithMessage(ValidationMessages.MaximumCharachterAllowence("Description", 5000));
             RuleFor(x => x.Clients)
                 .NotEmpty().WithMessage(ValidationMessages.NullEmptyMessage("Clients"))
                 .NotNull().WithMessage(ValidationMessages.NullEmptyMessage("Clients"))
-                .GreaterThan(0).WithMessage(ValidationMessages.GreaterThanMessage("Clients",0))
+                .GreaterThan(0).WithMessage(ValidationMessages.GreaterThanMessage("Clients", 0))
                 .LessThan(1000).WithMessage(ValidationMessages.LessThanMessage("Clients", 1000));
             RuleFor(x => x.Projects)
                 .NotEmpty().WithMessage(ValidationMessages.NullEmptyMessage("Projects"))

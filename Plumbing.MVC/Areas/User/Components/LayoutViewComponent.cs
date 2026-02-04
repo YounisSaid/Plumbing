@@ -19,13 +19,13 @@ namespace Plumbing.MVC.Areas.User.Components
 
         public async Task<IViewComponentResult> InvokeAsync(string Username)
         {
-            if(Username is null)
+            if (Username is null)
             {
                 Username = User.Identity!.Name!;
             }
             var user = await _userManager.FindByNameAsync(Username);
 
-            if(user!.FileName is null)
+            if (user!.FileName is null)
             {
                 return View(new UserPictureVM { FileName = "Default" });
             }

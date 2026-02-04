@@ -13,11 +13,11 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
 {
     public class AboutService : IAboutService
     {
-        private readonly IUnitOfWork _unitOfWork;  
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IGenericRepository<About> _aboutRepository;
         private readonly IImageHelper _imageHelper;
-        public AboutService(IUnitOfWork unitOfWork, IMapper mapper,IImageHelper imageHelper)
+        public AboutService(IUnitOfWork unitOfWork, IMapper mapper, IImageHelper imageHelper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -59,9 +59,9 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
         public async Task DeleteAboutAsync(int id)
         {
             var about = await _aboutRepository.GetByIdAsync(id);
-             _aboutRepository.Delete(about);
-             await _unitOfWork.CommitAsync();
-            
+            _aboutRepository.Delete(about);
+            await _unitOfWork.CommitAsync();
+
         }
     }
 }

@@ -4,9 +4,9 @@ using EntityLayer.WebApplication.ViewModels.Service;
 
 namespace ServiceLayer.AutoMapper.WebApplication
 {
-    public class ServieceMapper : Profile
+    public class ServiceMapper : Profile
     {
-        public ServieceMapper()
+        public ServiceMapper()
         {
             CreateMap<Service,ServiceAddMV>().ReverseMap();
             CreateMap<Service,ServiceUpdateMV>().ReverseMap();

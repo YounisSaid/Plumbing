@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using EntityLayer.Identity.Entites;
 using EntityLayer.Identity.ViewModels;
-using FluentValidation;
 
 namespace ServiceLayer.AutoMapper.Identity
 {

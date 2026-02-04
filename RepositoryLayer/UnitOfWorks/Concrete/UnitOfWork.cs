@@ -2,11 +2,6 @@
 using RepositoryLayer.Repositories.Abstract;
 using RepositoryLayer.Repositories.Concrete;
 using RepositoryLayer.UnitOfWorks.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RepositoryLayer.UnitOfWorks.Concrete
 {
@@ -38,6 +33,6 @@ namespace RepositoryLayer.UnitOfWorks.Concrete
         {
             return new GenericRepository<TEntity>(_context);
         }
-        
+
     }
 }
