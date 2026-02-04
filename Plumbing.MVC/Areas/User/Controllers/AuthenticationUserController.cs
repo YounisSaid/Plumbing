@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EntityLayer.Enumerates;
 using EntityLayer.Identity.Entites;
 using EntityLayer.Identity.ViewModels;
 using FluentValidation;
@@ -6,6 +7,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ServiceLayer.Helpers.Generic;
 using ServiceLayer.Helpers.Identity.ModelStateHelper;
 
 namespace Plumbing.MVC.Areas.User.Controllers
@@ -18,13 +20,15 @@ namespace Plumbing.MVC.Areas.User.Controllers
         private readonly IMapper _mapper;
         private readonly IValidator<UserEditMV> _userEditValidator;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly IImageHelper _imageHelper;
 
-        public AuthenticationUserController(UserManager<AppUser> userManager, IMapper mapper, IValidator<UserEditMV> userEditValidator, SignInManager<AppUser> signInManager)
+        public AuthenticationUserController(UserManager<AppUser> userManager, IMapper mapper, IValidator<UserEditMV> userEditValidator, SignInManager<AppUser> signInManager, IImageHelper imageHelper)
         {
             _userManager = userManager;
             _mapper = mapper;
             _userEditValidator = userEditValidator;
             _signInManager = signInManager;
+            _imageHelper = imageHelper;
         }
         [HttpGet]
         public async Task<IActionResult> UserEdit()
@@ -67,6 +71,7 @@ namespace Plumbing.MVC.Areas.User.Controllers
 
             if (input.Photo != null)
             {
+                var image = _imageHelper.UploadImage(null, input.Photo, imageType.identity);
                 input.FileName = DateTime.Now.ToString();
                 input.FileType = DateTime.Now.ToString();
             }
