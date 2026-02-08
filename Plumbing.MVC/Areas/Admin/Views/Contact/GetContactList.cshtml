@@ -58,10 +58,13 @@
                 }
             </tbody>
         </table>
+        @if(!Model.Any())
+        {
+            <div>
+                <a asp-area="Admin" asp-controller="Contact" asp-action="AddContact" class="btn btn-success btn-sm"> Add Contact</a>
+            </div>
 
-        <div>
-            <a asp-area="Admin" asp-controller="Contact" asp-action="AddContact" class="btn btn-success btn-sm"> Add Contact</a>
-        </div>
-
+        }
+       
     </div>
 </div>

@@ -1,4 +1,5 @@
-﻿using EntityLayer.WebApplication.ViewModels.About;
+﻿using EntityLayer.WebApplication.Entites;
+using EntityLayer.WebApplication.ViewModels.About;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [ServiceFilter(typeof(AddAboutPreventionFilter))]
+        [ServiceFilter(typeof(AddGenericPreventionFilter<About>))]
         public async Task<IActionResult> AddAbout()
         {
             return View();

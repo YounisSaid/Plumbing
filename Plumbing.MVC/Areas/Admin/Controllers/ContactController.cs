@@ -1,7 +1,9 @@
-﻿using EntityLayer.WebApplication.ViewModels.Contact;
+﻿using EntityLayer.WebApplication.Entites;
+using EntityLayer.WebApplication.ViewModels.Contact;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using ServiceLayer.Filters.WebApplication;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace Plumbing.MVC.Areas.Admin.Controllers
@@ -12,7 +14,7 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         private readonly IContactService _contactService;
         private readonly IValidator<ContactAddMV> _categoryAddValidator;
         private readonly IValidator<ContactUpdateMV> _categoryUpdateValidator;
-        public ContactController(IContactService contactService,IValidator<ContactAddMV> categoryAddValidator,IValidator<ContactUpdateMV> categoryUpdateValidator)
+        public ContactController(IContactService contactService, IValidator<ContactAddMV> categoryAddValidator, IValidator<ContactUpdateMV> categoryUpdateValidator)
         {
             _contactService = contactService;
             _categoryAddValidator = categoryAddValidator;
@@ -26,6 +28,7 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(AddGenericPreventionFilter<Contact>))]
         public async Task<IActionResult> AddContact()
         {
             return View();
@@ -36,9 +39,9 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
             var ValidationResult = await _categoryAddValidator.ValidateAsync(model);
             if (ValidationResult.IsValid)
             {
-            await _contactService.AddContactAsync(model);
-            return RedirectToAction(nameof(GetContactList), "Contact", new { Area = "Admin" });
-               
+                await _contactService.AddContactAsync(model);
+                return RedirectToAction(nameof(GetContactList), "Contact", new { Area = "Admin" });
+
             }
             ValidationResult.AddToModelState(ModelState);
             return View(model);
