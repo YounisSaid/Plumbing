@@ -5,7 +5,9 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 using ServiceLayer.Helpers.Identity.ModelStateHelper;
+using ServiceLayer.Messages.Identity;
 using ServiceLayer.Serviecs.Identity.Abstract;
 
 namespace Plumbing.MVC.Controllers
@@ -20,6 +22,7 @@ namespace Plumbing.MVC.Controllers
         private readonly IMapper _mapper;
         private readonly IValidator<ResetPasswordVM> _resetPasswordValidator;
         private readonly IAuthenticationMainService _authenticationMainService;
+        private readonly IToastNotification _toasty;
 
         public AuthenticationController(UserManager<AppUser> userManager,
                                         SignInManager<AppUser> signInManager,
@@ -28,7 +31,8 @@ namespace Plumbing.MVC.Controllers
                                         IValidator<ForgetPasswordMV> forgetPasswordValidator,
                                         IMapper mapper,
                                         IValidator<ResetPasswordVM> resetPasswordValidator,
-                                        IAuthenticationMainService authenticationMainService)
+                                        IAuthenticationMainService authenticationMainService,
+                                        IToastNotification toasty)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -38,6 +42,7 @@ namespace Plumbing.MVC.Controllers
             _mapper = mapper;
             _resetPasswordValidator = resetPasswordValidator;
             _authenticationMainService = authenticationMainService;
+            _toasty = toasty;
         }
 
         [HttpGet]
@@ -65,8 +70,9 @@ namespace Plumbing.MVC.Controllers
                 ModelState.AddModelStateListErrors(userCreatedResult.Errors);
                 return View(input);
             }
-
+            _toasty.AddSuccessToastMessage(NotificationMessagesIdentity.SignUp(user.UserName!), new ToastrOptions { Title = NotificationMessagesIdentity.SuccessedTitle });
             return RedirectToAction("Login", "Authentication");
+
         }
 
         [HttpGet]
@@ -77,7 +83,7 @@ namespace Plumbing.MVC.Controllers
 
         public async Task<IActionResult> Login(LoginMV input, string? returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Action("Index", "Dashboard", new { Area = "Admin" });
+            returnUrl = returnUrl ?? Url.Action("Index", "Dashboard", new { Area = "User" });
 
             var validator = await _loginValidator.ValidateAsync(input);
             if (!validator.IsValid)
@@ -97,6 +103,7 @@ namespace Plumbing.MVC.Controllers
             var loginResult = await _signInManager.PasswordSignInAsync(user, input.Password, input.RememberMe, true);
             if (loginResult.Succeeded)
             {
+                _toasty.AddSuccessToastMessage(NotificationMessagesIdentity.LogInSuccess, new ToastrOptions { Title = NotificationMessagesIdentity.SuccessedTitle });
                 return Redirect(returnUrl!);
             }
 
@@ -136,7 +143,7 @@ namespace Plumbing.MVC.Controllers
             }
 
             await _authenticationMainService.CreatePasswordCardentialsAndSend(user, HttpContext, input.Email, Url);
-
+            _toasty.AddSuccessToastMessage(NotificationMessagesIdentity.PasswordChangeSuccess, new ToastrOptions { Title = NotificationMessagesIdentity.SuccessedTitle });
             return RedirectToAction("Login", "Authentication");
         }
 
@@ -162,7 +169,7 @@ namespace Plumbing.MVC.Controllers
             if (token == null || id == null)
             {
                 // Invalid ID or TOKEN
-                //Toaster Message Later
+                _toasty.AddErrorToastMessage(NotificationMessagesIdentity.TokenValidationError, new ToastrOptions { Title = NotificationMessagesIdentity.FailedTitle });
                 return RedirectToAction("Login", "Authentication");
             }
 
@@ -177,14 +184,14 @@ namespace Plumbing.MVC.Controllers
             if (user == null)
             {
                 // Invalid ID or TOKEN
-                //Toaster Message Later
+                _toasty.AddSuccessToastMessage(NotificationMessagesIdentity.UserError, new ToastrOptions { Title = NotificationMessagesIdentity.FailedTitle });
                 return RedirectToAction("Login", "Authentication");
             }
 
             var resetPasswordResult = await _userManager.ResetPasswordAsync(user!, token!.ToString()!, input.Password);
             if (resetPasswordResult.Succeeded)
             {
-                //Toaster Message Later
+                _toasty.AddSuccessToastMessage(NotificationMessagesIdentity.PasswordResetSuccess, new ToastrOptions { Title = NotificationMessagesIdentity.SuccessedTitle });
                 return RedirectToAction("Login", "Authentication");
             }
             else

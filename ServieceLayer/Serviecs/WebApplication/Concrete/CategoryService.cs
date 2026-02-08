@@ -3,8 +3,10 @@ using AutoMapper.QueryableExtensions;
 using EntityLayer.WebApplication.Entites;
 using EntityLayer.WebApplication.ViewModels.Category;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using RepositoryLayer.Repositories.Abstract;
 using RepositoryLayer.UnitOfWorks.Abstract;
+using ServiceLayer.Messages.WebApplication;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace ServiceLayer.Serviecs.WebApplication.Concrete
@@ -14,12 +16,14 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IGenericRepository<Category> _categoryRepository;
-
-        public CategoryService(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly IToastNotification _toasty;
+        private const string Section = "Category Section";
+        public CategoryService(IUnitOfWork unitOfWork, IMapper mapper, IToastNotification toasty)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _categoryRepository = _unitOfWork.GetRepository<Category>();
+            _toasty = toasty;
         }
 
         public async Task<List<CategoryListMV>> GetAllListAsync()
@@ -41,6 +45,9 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
             var category = _mapper.Map<Category>(addMV);
             await _categoryRepository.AddAsync(category);
             await _unitOfWork.CommitAsync();
+
+            _toasty.AddSuccessToastMessage(NotificationMessagesWebApplication.AddMessage(Section), new ToastrOptions { Title = NotificationMessagesWebApplication.SuccessedTitle });
+
         }
 
         public async Task UpdateCategoryAsync(CategoryUpdateMV updateMV)
@@ -48,6 +55,8 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
             var category = _mapper.Map<Category>(updateMV);
             _categoryRepository.Update(category);
             await _unitOfWork.CommitAsync();
+            _toasty.AddWarningToastMessage(NotificationMessagesWebApplication.UpdateMessage(Section), new ToastrOptions { Title = NotificationMessagesWebApplication.WarningTitle });
+
         }
 
         public async Task DeleteCategoryAsync(int id)
@@ -55,6 +64,7 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
             var category = await _categoryRepository.GetByIdAsync(id);
             _categoryRepository.Delete(category!);
             await _unitOfWork.CommitAsync();
+            _toasty.AddWarningToastMessage(NotificationMessagesWebApplication.DeleteMessage(Section), new ToastrOptions { Title = NotificationMessagesWebApplication.WarningTitle });
         }
     }
 }

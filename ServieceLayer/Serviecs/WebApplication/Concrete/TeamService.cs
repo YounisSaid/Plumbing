@@ -4,9 +4,11 @@ using EntityLayer.Enumerates;
 using EntityLayer.WebApplication.Entites;
 using EntityLayer.WebApplication.ViewModels.Team;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using RepositoryLayer.Repositories.Abstract;
 using RepositoryLayer.UnitOfWorks.Abstract;
 using ServiceLayer.Helpers.Generic;
+using ServiceLayer.Messages.WebApplication;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace ServiceLayer.Serviecs.WebApplication.Concrete
@@ -17,14 +19,18 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
         private readonly IMapper _mapper;
         private readonly IGenericRepository<Team> _teamRepository;
         public readonly IImageHelper _imageHelper;
+        private readonly IToastNotification _toasty;
+        private const string Section = "Team Section";
 
 
-        public TeamService(IUnitOfWork unitOfWork, IMapper mapper, IImageHelper imageHelper)
+
+        public TeamService(IUnitOfWork unitOfWork, IMapper mapper, IImageHelper imageHelper, IToastNotification toasty)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _teamRepository = _unitOfWork.GetRepository<Team>();
             _imageHelper = imageHelper;
+            _toasty = toasty;
         }
 
         public async Task<List<TeamListMV>> GetAllListAsync()
@@ -46,6 +52,7 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
             var image = await _imageHelper.UploadImageAsync(null, addMV.Photo, imageType.team);
             if (image.Error != null)
             {
+                _toasty.AddErrorToastMessage(image.Error, new ToastrOptions { Title = NotificationMessagesWebApplication.FailedTitle });
                 return;
             }
             addMV.FileName = image.FileName!;
@@ -53,6 +60,7 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
             var team = _mapper.Map<Team>(addMV);
             await _teamRepository.AddAsync(team);
             await _unitOfWork.CommitAsync();
+            _toasty.AddSuccessToastMessage(NotificationMessagesWebApplication.AddMessage(Section), new ToastrOptions { Title = NotificationMessagesWebApplication.SuccessedTitle });
         }
 
         public async Task UpdateTeamAsync(TeamUpdateMV updateMV)
@@ -63,10 +71,16 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
                 var image = await _imageHelper.UploadImageAsync(null, updateMV.Photo, imageType.about);
                 if (image.Error != null)
                 {
+                    _toasty.AddErrorToastMessage(image.Error, new ToastrOptions { Title = NotificationMessagesWebApplication.FailedTitle });
                     return;
                 }
                 updateMV.FileName = image.FileName!;
                 updateMV.FileType = image.FileType!;
+            }
+            else
+            {
+                updateMV.FileName = oldpTeam.FileName;
+                updateMV.FileType = oldpTeam.FileType;
             }
             var team = _mapper.Map<Team>(updateMV);
             _teamRepository.Update(team);
@@ -76,6 +90,8 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
             {
                 _imageHelper.DeleteImage(oldpTeam!.FileName);
             }
+            _toasty.AddWarningToastMessage(NotificationMessagesWebApplication.UpdateMessage(Section), new ToastrOptions { Title = NotificationMessagesWebApplication.WarningTitle });
+
         }
 
         public async Task DeleteTeamAsync(int id)
@@ -84,6 +100,7 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
             _teamRepository.Delete(team!);
             await _unitOfWork.CommitAsync();
             _imageHelper.DeleteImage(team!.FileName);
+            _toasty.AddWarningToastMessage(NotificationMessagesWebApplication.DeleteMessage(Section), new ToastrOptions { Title = NotificationMessagesWebApplication.WarningTitle });
         }
     }
 }

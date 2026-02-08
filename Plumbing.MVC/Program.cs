@@ -1,3 +1,4 @@
+using NToastNotify;
 using RepositoryLayer.Extensions;
 using ServiceLayer.Extension;
 
@@ -10,7 +11,11 @@ namespace Plumbing.MVC
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews().AddNToastNotifyToastr(new ToastrOptions()
+            {
+                ProgressBar = true,
+                PositionClass = ToastPositions.TopCenter
+            });
             builder.Services.LoadRepositoryLayerExtensions(builder.Configuration);
             builder.Services.LoadServiceLayerExtensions(builder.Configuration);
 
@@ -31,12 +36,12 @@ namespace Plumbing.MVC
             app.UseAuthorization();
             app.UseAuthorization();
 
-            #pragma warning disable ASP0014
+#pragma warning disable ASP0014
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapAreaControllerRoute(
                 name: "Admin",
-                areaName :"Admin",
+                areaName: "Admin",
                 pattern: "Admin/{controller=Dashboard}/{action=Index}/{id?}");
 
                 endpoints.MapAreaControllerRoute(

@@ -3,8 +3,10 @@ using AutoMapper.QueryableExtensions;
 using EntityLayer.WebApplication.Entites;
 using EntityLayer.WebApplication.ViewModels.Service;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using RepositoryLayer.Repositories.Abstract;
 using RepositoryLayer.UnitOfWorks.Abstract;
+using ServiceLayer.Messages.WebApplication;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace ServiceLayer.Serviecs.WebApplication.Concrete
@@ -14,12 +16,15 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IGenericRepository<Service> _serviceRepository;
+        private readonly IToastNotification _toasty;
+        private const string Section = "Service Section";
 
-        public ServiceService(IUnitOfWork unitOfWork, IMapper mapper)
+        public ServiceService(IUnitOfWork unitOfWork, IMapper mapper, IToastNotification toasty)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _serviceRepository = _unitOfWork.GetRepository<Service>();
+            _toasty = toasty;
         }
 
         public async Task<List<ServiceListMV>> GetAllListAsync()
@@ -41,6 +46,8 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
             var service = _mapper.Map<Service>(addMV);
             await _serviceRepository.AddAsync(service);
             await _unitOfWork.CommitAsync();
+            _toasty.AddSuccessToastMessage(NotificationMessagesWebApplication.AddMessage(Section), new ToastrOptions { Title = NotificationMessagesWebApplication.SuccessedTitle });
+
         }
 
         public async Task UpdateServiceAsync(ServiceUpdateMV updateMV)
@@ -48,6 +55,7 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
             var service = _mapper.Map<Service>(updateMV);
             _serviceRepository.Update(service);
             await _unitOfWork.CommitAsync();
+            _toasty.AddWarningToastMessage(NotificationMessagesWebApplication.UpdateMessage(Section), new ToastrOptions { Title = NotificationMessagesWebApplication.WarningTitle });
         }
 
         public async Task DeleteServiceAsync(int id)
@@ -55,6 +63,7 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
             var service = await _serviceRepository.GetByIdAsync(id);
             _serviceRepository.Delete(service!);
             await _unitOfWork.CommitAsync();
+            _toasty.AddWarningToastMessage(NotificationMessagesWebApplication.DeleteMessage(Section), new ToastrOptions { Title = NotificationMessagesWebApplication.WarningTitle });
         }
     }
 }
