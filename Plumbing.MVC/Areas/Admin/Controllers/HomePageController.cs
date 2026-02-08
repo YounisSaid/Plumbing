@@ -49,6 +49,8 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(GenericNotFoundFilter<HomePage>))]
+
         public async Task<IActionResult> UpdateHomePage(int Id)
         {
             var homePage = await _homePageService.GetByIdAsync(Id);

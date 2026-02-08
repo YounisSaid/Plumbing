@@ -1,7 +1,9 @@
-﻿using EntityLayer.WebApplication.ViewModels.Category;
+﻿using EntityLayer.WebApplication.Entites;
+using EntityLayer.WebApplication.ViewModels.Category;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using ServiceLayer.Filters.WebApplication;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace Plumbing.MVC.Areas.Admin.Controllers
@@ -13,7 +15,7 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IValidator<CategoryAddMV> _categoryAddValidator;
         private readonly IValidator<CategoryUpdateMV> _categoryUpdateValidator;
-        public CategoryController(ICategoryService categoryService,IValidator<CategoryAddMV> categoryAddValidator,IValidator<CategoryUpdateMV> categoryUpdateValidator)
+        public CategoryController(ICategoryService categoryService, IValidator<CategoryAddMV> categoryAddValidator, IValidator<CategoryUpdateMV> categoryUpdateValidator)
         {
             _categoryService = categoryService;
             _categoryAddValidator = categoryAddValidator;
@@ -46,6 +48,8 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(GenericNotFoundFilter<Category>))]
+
         public async Task<IActionResult> UpdateCategory(int Id)
         {
             var category = await _categoryService.GetByIdAsync(Id);
@@ -62,9 +66,9 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
                 await _categoryService.UpdateCategoryAsync(model);
                 return RedirectToAction(nameof(GetCategoryList), "Category", new { Area = "Admin" });
             }
-                ValidationResult.AddToModelState(ModelState);
-                return View(model);
-           
+            ValidationResult.AddToModelState(ModelState);
+            return View(model);
+
         }
 
         public async Task<IActionResult> DeleteCategory(int Id)

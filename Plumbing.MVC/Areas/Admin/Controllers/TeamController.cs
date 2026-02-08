@@ -1,7 +1,9 @@
-﻿using EntityLayer.WebApplication.ViewModels.Team;
+﻿using EntityLayer.WebApplication.Entites;
+using EntityLayer.WebApplication.ViewModels.Team;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using ServiceLayer.Filters.WebApplication;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace Plumbing.MVC.Areas.Admin.Controllers
@@ -46,6 +48,8 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(GenericNotFoundFilter<Team>))]
+
         public async Task<IActionResult> UpdateTeam(int Id)
         {
             var team = await _teamService.GetByIdAsync(Id);

@@ -52,6 +52,7 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(GenericNotFoundFilter<About>))]
         public async Task<IActionResult> UpdateAbout(int Id)
         {
             var about = await _aboutService.GetByIdAsync(Id);

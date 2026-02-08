@@ -48,6 +48,8 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(GenericNotFoundFilter<Contact>))]
+
         public async Task<IActionResult> UpdateContact(int Id)
         {
             var contact = await _contactService.GetByIdAsync(Id);

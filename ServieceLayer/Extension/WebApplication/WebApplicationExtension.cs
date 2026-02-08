@@ -11,6 +11,17 @@ namespace ServiceLayer.Extension.WebApplication
             services.AddScoped(typeof(AddGenericPreventionFilter<About>));
             services.AddScoped(typeof(AddGenericPreventionFilter<Contact>));
             services.AddScoped(typeof(AddGenericPreventionFilter<HomePage>));
+
+            services.AddScoped(typeof(GenericNotFoundFilter<About>));
+            services.AddScoped(typeof(GenericNotFoundFilter<Category>));
+            services.AddScoped(typeof(GenericNotFoundFilter<Contact>));
+            services.AddScoped(typeof(GenericNotFoundFilter<HomePage>));
+            services.AddScoped(typeof(GenericNotFoundFilter<Portfolio>));
+            services.AddScoped(typeof(GenericNotFoundFilter<Service>));
+            services.AddScoped(typeof(GenericNotFoundFilter<Team>));
+            services.AddScoped(typeof(GenericNotFoundFilter<Testimonial>));
+
+
             return services;
         }
     }

@@ -1,7 +1,9 @@
-﻿using EntityLayer.WebApplication.ViewModels.Service;
+﻿using EntityLayer.WebApplication.Entites;
+using EntityLayer.WebApplication.ViewModels.Service;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using ServiceLayer.Filters.WebApplication;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace Plumbing.MVC.Areas.Admin.Controllers
@@ -45,6 +47,8 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(GenericNotFoundFilter<Service>))]
+
         public async Task<IActionResult> UpdateService(int Id)
         {
             var service = await _serviceService.GetByIdAsync(Id);

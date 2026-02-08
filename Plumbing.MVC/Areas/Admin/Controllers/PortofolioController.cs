@@ -1,7 +1,9 @@
-﻿using EntityLayer.WebApplication.ViewModels.Portfolio;
+﻿using EntityLayer.WebApplication.Entites;
+using EntityLayer.WebApplication.ViewModels.Portfolio;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using ServiceLayer.Filters.WebApplication;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace Plumbing.MVC.Areas.Admin.Controllers
@@ -46,6 +48,8 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(GenericNotFoundFilter<Portfolio>))]
+
         public async Task<IActionResult> UpdatePortfolio(int Id)
         {
             var portfolio = await _portfolioService.GetByIdAsync(Id);
