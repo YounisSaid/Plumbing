@@ -46,7 +46,7 @@ namespace Plumbing.MVC.Areas.User.Controllers
             if (!validator.IsValid)
             {
                 validator.AddToModelState(ModelState);
-                return View(input);
+                return Redirect(nameof(UserEdit));
             }
 
             var checkPassword = await _userManager.CheckPasswordAsync(user!, input.Password);
@@ -54,7 +54,7 @@ namespace Plumbing.MVC.Areas.User.Controllers
             {
                 ViewBag.Result = "WrongPassword";
                 ModelState.AddModelStateListErrors(new List<string>() { "Password is Wrong!!!" });
-                return View(input);
+                return Redirect(nameof(UserEdit));
             }
             if (input.NewPassword != null)
             {
@@ -63,7 +63,7 @@ namespace Plumbing.MVC.Areas.User.Controllers
                 {
                     ViewBag.Result = "NewPasswordFailed";
                     ModelState.AddModelStateListErrors(PasswordChange.Errors);
-                    return View(input);
+                    return Redirect(nameof(UserEdit));
                 }
             }
             var oldFileName = user!.FileName;
@@ -71,9 +71,20 @@ namespace Plumbing.MVC.Areas.User.Controllers
 
             if (input.Photo != null)
             {
-                var image = _imageHelper.UploadImage(null, input.Photo, imageType.identity);
-                input.FileName = DateTime.Now.ToString();
-                input.FileType = DateTime.Now.ToString();
+                var image =await _imageHelper.UploadImageAsync(null, input.Photo, imageType.identity);
+                if(image.Error !=null)
+                {
+                    if(input.NewPassword !=null)
+                    {
+                        await _userManager.ChangePasswordAsync(user, input.NewPassword, input.Password!);
+                        await _userManager.UpdateSecurityStampAsync(user);
+                        await _signInManager.SignOutAsync();
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                    }
+                    return Redirect(nameof(UserEdit));
+                }
+                input.FileName = image.FileName;
+                input.FileType = image.FileType;
             }
             else
             {
@@ -81,15 +92,15 @@ namespace Plumbing.MVC.Areas.User.Controllers
                 input.FileType = oldFileType;
             }
 
-            var mappedUser = _mapper.Map(input, user);
-            var userUpdate = await _userManager.UpdateAsync(mappedUser);
+            _mapper.Map(input, user);
+            var userUpdate = await _userManager.UpdateAsync(user);
             if (userUpdate.Succeeded)
             {
                 if (input.Photo != null)
                 {
                     if (oldFileName != null)
                     {
-                        //Delete Photo Logic
+                        _imageHelper.DeleteImage(oldFileName);
                     }
                 }
                 await _userManager.UpdateSecurityStampAsync(user);
@@ -100,7 +111,7 @@ namespace Plumbing.MVC.Areas.User.Controllers
 
             if (input.FileName != null)
             {
-                //Delete New Photo if Failed
+                _imageHelper.DeleteImage(input.FileName);
             }
             if (input.NewPassword != null)
             {
@@ -110,7 +121,7 @@ namespace Plumbing.MVC.Areas.User.Controllers
                 await _signInManager.SignInAsync(user, isPersistent: false);
             }
             ViewBag.Username = user.UserName;
-            return View();
+            return Redirect(nameof(UserEdit));
         }
 
 

@@ -41,7 +41,7 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
 
         public async Task AddAboutAsync(AboutAddVM addVM)
         {
-            var test = await _imageHelper.UploadImage(null, addVM.Photo, imageType.about);
+            var test = await _imageHelper.UploadImageAsync(null, addVM.Photo, imageType.about);
             addVM.FileName = test.FileName!;
             addVM.FileType = test.FileType!;
             var about = _mapper.Map<About>(addVM);

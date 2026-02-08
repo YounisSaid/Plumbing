@@ -22,7 +22,7 @@ namespace ServiceLayer.Helpers.Generic
         public const string teamFolder = "team"; 
         public const string testimonialsFolder = "testimonials"; 
 
-        public async Task<UploadImageModel> UploadImage(string? folderName, IFormFile imageFile, imageType imageType)
+        public async Task<UploadImageModel> UploadImageAsync(string? folderName, IFormFile imageFile, imageType imageType)
         {
             // write new folderName if not exists
             if (folderName is null)
