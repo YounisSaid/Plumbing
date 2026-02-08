@@ -22,8 +22,6 @@
         <!-- Floating Labels Form -->
         <form asp-area="Admin" asp-controller="Portfolio" asp-action="AddPortfolio" method="post" class="row g-3" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="FileName" value="test" />
-            <input type="hidden" asp-for="FileType" value="test" />
             <input type="hidden" asp-for="CategoryId" value="1" />
 
             <div class="col-md-12">

@@ -16,7 +16,11 @@
         </ol>
     </nav>
 </div>
+<!-- Card with an image on top -->
+<div class="card">
+    <img src="~/images/@Model.FileName" class="card-img-top" alt="Plumbing Porftfolio">
 
+</div><!-- End Card with an image on top -->
 <div class="card">
     <div class="card-body pt-3">
         <form asp-area="Admin" asp-controller="Portfolio" asp-action="UpdatePortfolio" method="post" class="row g-3" enctype="multipart/form-data">
@@ -27,8 +31,7 @@
             <input type="hidden" asp-for="RowVersion" />
 
             @* Keep hidden fields for properties that must be submitted but aren't edited directly (like file metadata or CategoryId) *@
-            <input type="hidden" asp-for="FileName" />
-            <input type="hidden" asp-for="FileType" />
+            
             <input type="hidden" asp-for="CategoryId" />
 
 
