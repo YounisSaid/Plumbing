@@ -122,5 +122,8 @@
         
 </div>
 </div>
-
+@if(!@Model.Any())
+{
 <td><a asp-area="Admin" asp-controller="About" asp-action="AddAbout" class="btn btn-success btn-sm"> Add About Us</a></td>
+
+}

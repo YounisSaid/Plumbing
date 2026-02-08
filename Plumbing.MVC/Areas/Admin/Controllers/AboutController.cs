@@ -2,6 +2,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using ServiceLayer.Filters.WebApplication;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace Plumbing.MVC.Areas.Admin.Controllers
@@ -12,16 +13,16 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         private readonly IAboutService _aboutService;
         private readonly IValidator<AboutAddVM> _aboutAddValidator;
         private readonly IValidator<AboutUpdateVM> _aboutUpdateValidator;
-       
 
-        public AboutController(IAboutService aboutService,IValidator<AboutAddVM> aboutAddValidator,IValidator<AboutUpdateVM> aboutUpdateValidator)
+
+        public AboutController(IAboutService aboutService, IValidator<AboutAddVM> aboutAddValidator, IValidator<AboutUpdateVM> aboutUpdateValidator)
         {
             _aboutService = aboutService;
             _aboutAddValidator = aboutAddValidator;
             _aboutUpdateValidator = aboutUpdateValidator;
-            
+
         }
-      
+
 
         public async Task<IActionResult> GetAboutList()
         {
@@ -30,6 +31,7 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(AddAboutPreventionFilter))]
         public async Task<IActionResult> AddAbout()
         {
             return View();
@@ -40,9 +42,9 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
             var ValidationResult = await _aboutAddValidator.ValidateAsync(model);
             if (ValidationResult.IsValid)
             {
-            await _aboutService.AddAboutAsync(model);
-            return RedirectToAction(nameof(GetAboutList), "About", new { Area = "Admin" });
-               
+                await _aboutService.AddAboutAsync(model);
+                return RedirectToAction(nameof(GetAboutList), "About", new { Area = "Admin" });
+
             }
             ValidationResult.AddToModelState(ModelState);
             return View(model);
