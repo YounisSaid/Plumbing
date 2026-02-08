@@ -41,9 +41,13 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
 
         public async Task AddAboutAsync(AboutAddVM addVM)
         {
-            var test = await _imageHelper.UploadImageAsync(null, addVM.Photo, imageType.about);
-            addVM.FileName = test.FileName!;
-            addVM.FileType = test.FileType!;
+            var image = await _imageHelper.UploadImageAsync(null, addVM.Photo, imageType.about);
+            if (image.Error != null)
+            {
+                return;
+            }
+            addVM.FileName = image.FileName!;
+            addVM.FileType = image.FileType!;
             var about = _mapper.Map<About>(addVM);
             await _aboutRepository.AddAsync(about);
             await _unitOfWork.CommitAsync();
@@ -51,9 +55,26 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
 
         public async Task UpdateAboutAsync(AboutUpdateVM updateVM)
         {
+            var oldAbout = await _aboutRepository.Where(x => x.Id == updateVM.Id).AsNoTracking().FirstAsync();
+            if (updateVM.Photo != null)
+            {
+                var image = await _imageHelper.UploadImageAsync(null, updateVM.Photo, imageType.about);
+                if (image.Error != null)
+                {
+                    return;
+                }
+                updateVM.FileName = image.FileName!;
+                updateVM.FileType = image.FileType!;
+            }
+
             var about = _mapper.Map<About>(updateVM);
             _aboutRepository.Update(about);
             await _unitOfWork.CommitAsync();
+
+            if (updateVM.Photo != null)
+            {
+                _imageHelper.DeleteImage(oldAbout!.FileName);
+            }
         }
 
         public async Task DeleteAboutAsync(int id)
@@ -61,6 +82,7 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
             var about = await _aboutRepository.GetByIdAsync(id);
             _aboutRepository.Delete(about!);
             await _unitOfWork.CommitAsync();
+            _imageHelper.DeleteImage(about!.FileName);
 
         }
     }
