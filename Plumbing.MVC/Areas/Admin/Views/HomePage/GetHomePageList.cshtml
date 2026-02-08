@@ -58,10 +58,13 @@
                 }
             </tbody>
         </table>
-
-        <div>
-            <a asp-area="Admin" asp-controller="HomePage" asp-action="AddHomePage" class="btn btn-success btn-sm"> Add Home Page Item</a>
-        </div>
+        @if(!Model.Any())
+        {
+            <div>
+                <a asp-area="Admin" asp-controller="HomePage" asp-action="AddHomePage" class="btn btn-success btn-sm"> Add Home Page Item</a>
+            </div>
+        }
+        
 
     </div>
 </div>

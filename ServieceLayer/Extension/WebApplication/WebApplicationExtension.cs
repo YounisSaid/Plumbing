@@ -10,6 +10,7 @@ namespace ServiceLayer.Extension.WebApplication
         {
             services.AddScoped(typeof(AddGenericPreventionFilter<About>));
             services.AddScoped(typeof(AddGenericPreventionFilter<Contact>));
+            services.AddScoped(typeof(AddGenericPreventionFilter<HomePage>));
             return services;
         }
     }

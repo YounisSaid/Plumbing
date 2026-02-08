@@ -1,7 +1,9 @@
-﻿using EntityLayer.WebApplication.ViewModels.HomePage;
+﻿using EntityLayer.WebApplication.Entites;
+using EntityLayer.WebApplication.ViewModels.HomePage;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using ServiceLayer.Filters.WebApplication;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace Plumbing.MVC.Areas.Admin.Controllers
@@ -12,7 +14,7 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         private readonly IHomePageService _homePageService;
         private readonly IValidator<HomePageAddMV> _homePageAddValidator;
         private readonly IValidator<HomePageUpdateMV> _homePageUpdateValidator;
-        public HomePageController(IHomePageService homePageService,IValidator<HomePageAddMV> homePageAddValidator,IValidator<HomePageUpdateMV> homePageUpdateValidator)
+        public HomePageController(IHomePageService homePageService, IValidator<HomePageAddMV> homePageAddValidator, IValidator<HomePageUpdateMV> homePageUpdateValidator)
         {
             _homePageService = homePageService;
             _homePageAddValidator = homePageAddValidator;
@@ -26,6 +28,7 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(AddGenericPreventionFilter<HomePage>))]
         public async Task<IActionResult> AddHomePage()
         {
             return View();
