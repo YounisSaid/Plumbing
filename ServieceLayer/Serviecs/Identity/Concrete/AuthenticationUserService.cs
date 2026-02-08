@@ -63,7 +63,7 @@ namespace ServiceLayer.Serviecs.Identity.Concrete
                         await _signInManager.SignOutAsync();
                         await _signInManager.SignInAsync(user, isPersistent: false);
                     }
-                    var errors = new IdentityError() { Code = "ImageError", Description = "Photo must be in GPG or GPEG or PNG" };
+                    var errors = new IdentityError() { Code = "ImageError", Description = image.Error };
                     var passwordFail = IdentityResult.Failed(errors);
                 }
                 input.FileName = image.FileName;
