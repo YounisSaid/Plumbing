@@ -19,7 +19,7 @@ namespace Plumbing.MVC.Controllers
         private readonly IValidator<ForgetPasswordMV> _ForgetPasswordValidator;
         private readonly IMapper _mapper;
         private readonly IValidator<ResetPasswordVM> _resetPasswordValidator;
-        private readonly IAuthenticationCustomService _authenticationCustomService;
+        private readonly IAuthenticationMainService _authenticationMainService;
 
         public AuthenticationController(UserManager<AppUser> userManager,
                                         SignInManager<AppUser> signInManager,
@@ -28,7 +28,7 @@ namespace Plumbing.MVC.Controllers
                                         IValidator<ForgetPasswordMV> forgetPasswordValidator,
                                         IMapper mapper,
                                         IValidator<ResetPasswordVM> resetPasswordValidator,
-                                        IAuthenticationCustomService authenticationCustomService)
+                                        IAuthenticationMainService authenticationMainService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -37,7 +37,7 @@ namespace Plumbing.MVC.Controllers
             _ForgetPasswordValidator = forgetPasswordValidator;
             _mapper = mapper;
             _resetPasswordValidator = resetPasswordValidator;
-            _authenticationCustomService = authenticationCustomService;
+            _authenticationMainService = authenticationMainService;
         }
 
         [HttpGet]
@@ -135,7 +135,7 @@ namespace Plumbing.MVC.Controllers
                 return View(input);
             }
 
-            await _authenticationCustomService.CreatePasswordCardentialsAndSend(user, HttpContext, input.Email, Url);
+            await _authenticationMainService.CreatePasswordCardentialsAndSend(user, HttpContext, input.Email, Url);
 
             return RedirectToAction("Login", "Authentication");
         }

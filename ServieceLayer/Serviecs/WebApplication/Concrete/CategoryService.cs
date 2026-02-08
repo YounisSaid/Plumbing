@@ -53,7 +53,7 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
         public async Task DeleteCategoryAsync(int id)
         {
             var category = await _categoryRepository.GetByIdAsync(id);
-            _categoryRepository.Delete(category);
+            _categoryRepository.Delete(category!);
             await _unitOfWork.CommitAsync();
         }
     }

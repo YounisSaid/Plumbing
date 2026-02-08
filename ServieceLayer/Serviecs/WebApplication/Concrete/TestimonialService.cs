@@ -53,7 +53,7 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
         public async Task DeleteTestimonialAsync(int id)
         {
             var testimonial = await _testimonialRepository.GetByIdAsync(id);
-            _testimonialRepository.Delete(testimonial);
+            _testimonialRepository.Delete(testimonial!);
             await _unitOfWork.CommitAsync();
         }
     }

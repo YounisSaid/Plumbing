@@ -53,7 +53,7 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
         public async Task DeleteTeamAsync(int id)
         {
             var team = await _teamRepository.GetByIdAsync(id);
-            _teamRepository.Delete(team);
+            _teamRepository.Delete(team!);
             await _unitOfWork.CommitAsync();
         }
     }

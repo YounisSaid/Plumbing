@@ -53,7 +53,7 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
         public async Task DeleteHomePageAsync(int id)
         {
             var homePage = await _homePageRepository.GetByIdAsync(id);
-            _homePageRepository.Delete(homePage);
+            _homePageRepository.Delete(homePage!);
             await _unitOfWork.CommitAsync();
         }
     }

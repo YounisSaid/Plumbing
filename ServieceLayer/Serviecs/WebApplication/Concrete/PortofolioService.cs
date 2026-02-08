@@ -53,7 +53,7 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
         public async Task DeletePortfolioAsync(int id)
         {
             var portfolio = await _portfolioRepository.GetByIdAsync(id);
-            _portfolioRepository.Delete(portfolio);
+            _portfolioRepository.Delete(portfolio!);
             await _unitOfWork.CommitAsync();
         }
     }

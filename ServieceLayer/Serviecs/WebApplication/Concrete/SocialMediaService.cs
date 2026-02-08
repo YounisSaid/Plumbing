@@ -53,7 +53,7 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
         public async Task DeleteSocialMediaAsync(int id)
         {
             var socialMedia = await _socialMediaRepository.GetByIdAsync(id);
-            _socialMediaRepository.Delete(socialMedia);
+            _socialMediaRepository.Delete(socialMedia!);
             await _unitOfWork.CommitAsync();
         }
     }

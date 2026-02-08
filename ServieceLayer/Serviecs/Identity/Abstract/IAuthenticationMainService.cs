@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ServiceLayer.Serviecs.Identity.Abstract
 {
-    public interface IAuthenticationCustomService
+    public interface IAuthenticationMainService
     {
-        Task CreatePasswordCardentialsAndSend(AppUser user, HttpContext context, string email,IUrlHelper url);
+        Task CreatePasswordCardentialsAndSend(AppUser user, HttpContext context, string email, IUrlHelper url);
     }
 }

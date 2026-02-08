@@ -59,7 +59,7 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
         public async Task DeleteAboutAsync(int id)
         {
             var about = await _aboutRepository.GetByIdAsync(id);
-            _aboutRepository.Delete(about);
+            _aboutRepository.Delete(about!);
             await _unitOfWork.CommitAsync();
 
         }

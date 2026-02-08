@@ -53,7 +53,7 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
         public async Task DeleteContactAsync(int id)
         {
             var contact = await _contactRepository.GetByIdAsync(id);
-            _contactRepository.Delete(contact);
+            _contactRepository.Delete(contact!);
             await _unitOfWork.CommitAsync();
         }
     }

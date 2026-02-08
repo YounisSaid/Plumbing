@@ -7,12 +7,12 @@ using ServiceLayer.Serviecs.Identity.Abstract;
 
 namespace ServiceLayer.Serviecs.Identity.Concrete
 {
-    public class AuthenticationCustomService : IAuthenticationCustomService
+    public class AuthenticationMainService : IAuthenticationMainService
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IEmailSendMethodHelper _emailSendMethodHelper;
 
-        public AuthenticationCustomService(IEmailSendMethodHelper emailSendMethodHelper, UserManager<AppUser> userManager)
+        public AuthenticationMainService(IEmailSendMethodHelper emailSendMethodHelper, UserManager<AppUser> userManager)
         {
             _emailSendMethodHelper = emailSendMethodHelper;
             _userManager = userManager;
