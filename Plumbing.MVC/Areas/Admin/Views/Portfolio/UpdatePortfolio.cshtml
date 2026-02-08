@@ -17,11 +17,14 @@
     </nav>
 </div>
 <!-- Card with an image on top -->
-<div class="card">
-    <img src="~/images/@Model.FileName" class="card-img-top" alt="Plumbing Porftfolio">
+<div class="row">
+    <!-- Card with an image on top -->
+    <div class="col-lg-4 card">
+        <img src="~/images/@Model.FileName" class="card-img-top" alt="Team Member">
 
-</div><!-- End Card with an image on top -->
-<div class="card">
+    </div>
+
+    <div class="col-lg-8 card">
     <div class="card-body pt-3">
         <form asp-area="Admin" asp-controller="Portfolio" asp-action="UpdatePortfolio" method="post" class="row g-3" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>

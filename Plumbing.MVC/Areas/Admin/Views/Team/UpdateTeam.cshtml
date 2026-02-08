@@ -24,17 +24,14 @@
 
     </div>
 
-
-
-    <div class="card">
+    <div class="col-lg-8 card">
         <div class="card-body pt-3">
 
             <!-- Floating Labels Form -->
             <form asp-area="Admin" asp-controller="Team" asp-action="UpdateTeam" method="post" class="row g-3" enctype="multipart/form-data">
                 <input type="hidden" asp-for="Id" />
                 <input type="hidden" asp-for="RowVersion" />
-                <input type="hidden" asp-for="FileName" />
-                <input type="hidden" asp-for="FileType" />
+            
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 

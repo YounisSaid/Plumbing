@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using EntityLayer.Enumerates;
 using EntityLayer.WebApplication.Entites;
 using EntityLayer.WebApplication.ViewModels.Team;
 using Microsoft.EntityFrameworkCore;
 using RepositoryLayer.Repositories.Abstract;
 using RepositoryLayer.UnitOfWorks.Abstract;
+using ServiceLayer.Helpers.Generic;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace ServiceLayer.Serviecs.WebApplication.Concrete
@@ -14,12 +16,15 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IGenericRepository<Team> _teamRepository;
+        public readonly IImageHelper _imageHelper;
 
-        public TeamService(IUnitOfWork unitOfWork, IMapper mapper)
+
+        public TeamService(IUnitOfWork unitOfWork, IMapper mapper, IImageHelper imageHelper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _teamRepository = _unitOfWork.GetRepository<Team>();
+            _imageHelper = imageHelper;
         }
 
         public async Task<List<TeamListMV>> GetAllListAsync()
@@ -38,6 +43,13 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
 
         public async Task AddTeamAsync(TeamAddMV addMV)
         {
+            var image = await _imageHelper.UploadImageAsync(null, addMV.Photo, imageType.team);
+            if (image.Error != null)
+            {
+                return;
+            }
+            addMV.FileName = image.FileName!;
+            addMV.FileType = image.FileType!;
             var team = _mapper.Map<Team>(addMV);
             await _teamRepository.AddAsync(team);
             await _unitOfWork.CommitAsync();
@@ -45,9 +57,25 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
 
         public async Task UpdateTeamAsync(TeamUpdateMV updateMV)
         {
+            var oldpTeam = await _teamRepository.Where(x => x.Id == updateMV.Id).AsNoTracking().FirstAsync();
+            if (updateMV.Photo != null)
+            {
+                var image = await _imageHelper.UploadImageAsync(null, updateMV.Photo, imageType.about);
+                if (image.Error != null)
+                {
+                    return;
+                }
+                updateMV.FileName = image.FileName!;
+                updateMV.FileType = image.FileType!;
+            }
             var team = _mapper.Map<Team>(updateMV);
             _teamRepository.Update(team);
             await _unitOfWork.CommitAsync();
+
+            if (updateMV.Photo != null)
+            {
+                _imageHelper.DeleteImage(oldpTeam!.FileName);
+            }
         }
 
         public async Task DeleteTeamAsync(int id)
@@ -55,6 +83,7 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
             var team = await _teamRepository.GetByIdAsync(id);
             _teamRepository.Delete(team!);
             await _unitOfWork.CommitAsync();
+            _imageHelper.DeleteImage(team!.FileName);
         }
     }
 }

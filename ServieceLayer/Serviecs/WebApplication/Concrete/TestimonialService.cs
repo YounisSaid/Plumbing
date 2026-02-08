@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using EntityLayer.Enumerates;
 using EntityLayer.WebApplication.Entites;
 using EntityLayer.WebApplication.ViewModels.Testimonial;
 using Microsoft.EntityFrameworkCore;
 using RepositoryLayer.Repositories.Abstract;
 using RepositoryLayer.UnitOfWorks.Abstract;
+using ServiceLayer.Helpers.Generic;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace ServiceLayer.Serviecs.WebApplication.Concrete
@@ -14,12 +16,15 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IGenericRepository<Testimonial> _testimonialRepository;
+        public readonly IImageHelper _imageHelper;
 
-        public TestimonialService(IUnitOfWork unitOfWork, IMapper mapper)
+
+        public TestimonialService(IUnitOfWork unitOfWork, IMapper mapper, IImageHelper imageHelper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _testimonialRepository = _unitOfWork.GetRepository<Testimonial>();
+            _imageHelper = imageHelper;
         }
 
         public async Task<List<TestimonialListMV>> GetAllListAsync()
@@ -38,6 +43,13 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
 
         public async Task AddTestimonialAsync(TestimonialAddMV addMV)
         {
+            var image = await _imageHelper.UploadImageAsync(null, addMV.Photo, imageType.testimonials);
+            if (image.Error != null)
+            {
+                return;
+            }
+            addMV.FileName = image.FileName!;
+            addMV.FileType = image.FileType!;
             var testimonial = _mapper.Map<Testimonial>(addMV);
             await _testimonialRepository.AddAsync(testimonial);
             await _unitOfWork.CommitAsync();
@@ -45,9 +57,25 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
 
         public async Task UpdateTestimonialAsync(TestimonialUpdateMV updateMV)
         {
+            var oldpTestimonial = await _testimonialRepository.Where(x => x.Id == updateMV.Id).AsNoTracking().FirstAsync();
+            if (updateMV.Photo != null)
+            {
+                var image = await _imageHelper.UploadImageAsync(null, updateMV.Photo, imageType.about);
+                if (image.Error != null)
+                {
+                    return;
+                }
+                updateMV.FileName = image.FileName!;
+                updateMV.FileType = image.FileType!;
+            }
             var testimonial = _mapper.Map<Testimonial>(updateMV);
             _testimonialRepository.Update(testimonial);
             await _unitOfWork.CommitAsync();
+
+            if (updateMV.Photo != null)
+            {
+                _imageHelper.DeleteImage(oldpTestimonial!.FileName);
+            }
         }
 
         public async Task DeleteTestimonialAsync(int id)

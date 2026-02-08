@@ -19,21 +19,23 @@
 
 <!-- Card with an image on top -->
 
-<div class="row">
 
 
-    <div class="col-lg-4 card">
-        <img src="~/images/@Model.FileName" class="card-img-top" alt="Testimonial">
 
-    </div>
-    <div class="card">
+    <div class="row">
+        <!-- Card with an image on top -->
+        <div class="col-lg-4 card">
+            <img src="~/images/@Model.FileName" class="card-img-top" alt="Team Member">
+
+        </div>
+
+        <div class="col-lg-8 card">
         <div class="card-body pt-3">
             <!-- Floating Labels Form -->
             <form asp-area="Admin" asp-controller="Testimonial" asp-action="UpdateTestimonial" method="post" class="row g-3" enctype="multipart/form-data">
                 <input type="hidden" asp-for="Id" />
                 <input type="hidden" asp-for="RowVersion" />
-                <input type="hidden" asp-for="FileName" />
-                <input type="hidden" asp-for="FileType" />
+              
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="col-md-6">
