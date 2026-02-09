@@ -17,10 +17,6 @@ namespace Plumbing.MVC.Controllers
                 return View(new ErrorVM(exception.Message, 401));
             }
 
-            //if (exception is DBConcurrencyException)
-            //{
-            //    return View(new ErrorVM("This Data Has been Modified,Please Try Again Later!!", 401));
-            //}
 
             if (exception.InnerException is SqlException sqlException && sqlException.Number == 547)
             {

@@ -185,7 +185,7 @@ namespace RepositoryLayer.Migrations
                     b.HasIndex("SocialMediaID")
                         .IsUnique();
 
-                    b.ToTable("Abouts");
+                    b.ToTable("Abouts", (string)null);
 
                     b.HasData(
                         new
@@ -234,7 +234,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -296,7 +296,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contacts", (string)null);
 
                     b.HasData(
                         new
@@ -349,7 +349,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HomePages");
+                    b.ToTable("HomePages", (string)null);
 
                     b.HasData(
                         new
@@ -405,7 +405,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Portofolios");
+                    b.ToTable("Portofolios", (string)null);
 
                     b.HasData(
                         new
@@ -486,7 +486,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Services");
+                    b.ToTable("Services", (string)null);
 
                     b.HasData(
                         new
@@ -552,7 +552,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SocialMedias");
+                    b.ToTable("SocialMedias", (string)null);
 
                     b.HasData(
                         new
@@ -619,7 +619,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teams");
+                    b.ToTable("Teams", (string)null);
 
                     b.HasData(
                         new
@@ -683,7 +683,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Testimonials");
+                    b.ToTable("Testimonials", (string)null);
 
                     b.HasData(
                         new
