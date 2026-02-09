@@ -1,4 +1,5 @@
 ﻿using EntityLayer.WebApplication.Entites;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace RepositoryLayer.Configurations.WebApplication
@@ -10,6 +11,7 @@ namespace RepositoryLayer.Configurations.WebApplication
             builder.Property(p => p.Title).IsRequired().HasMaxLength(100);
             builder.Property(p => p.FileType).IsRequired();
             builder.Property(p => p.FileName).IsRequired();
+            builder.HasOne(p => p.Category).WithMany(p => p.Portofolios).OnDelete(DeleteBehavior.Restrict);
             builder.HasData(new Portfolio
             {
                 Id = 1,

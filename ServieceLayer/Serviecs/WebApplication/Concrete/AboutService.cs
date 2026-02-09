@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using NToastNotify;
 using RepositoryLayer.Repositories.Abstract;
 using RepositoryLayer.UnitOfWorks.Abstract;
+using ServiceLayer.Exceptions.WebApplication;
 using ServiceLayer.Helpers.Generic;
 using ServiceLayer.Messages.WebApplication;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
@@ -83,7 +84,12 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
 
             var about = _mapper.Map<About>(updateVM);
             _aboutRepository.Update(about);
-            await _unitOfWork.CommitAsync();
+            bool result = await _unitOfWork.CommitAsync();
+            if (!result)
+            {
+                _imageHelper.DeleteImage(updateVM.FileName);
+                throw new ClientSideException(ExceptionMessages.ConcurrencyException);
+            }
 
             if (updateVM.Photo != null)
             {

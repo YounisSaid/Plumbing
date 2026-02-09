@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using NToastNotify;
 using RepositoryLayer.Repositories.Abstract;
 using RepositoryLayer.UnitOfWorks.Abstract;
+using ServiceLayer.Exceptions.WebApplication;
 using ServiceLayer.Helpers.Generic;
 using ServiceLayer.Messages.WebApplication;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
@@ -84,8 +85,12 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
             }
             var portfolio = _mapper.Map<Portfolio>(updateMV);
             _portfolioRepository.Update(portfolio);
-            await _unitOfWork.CommitAsync();
-
+            bool result = await _unitOfWork.CommitAsync();
+            if (!result)
+            {
+                _imageHelper.DeleteImage(updateMV.FileName);
+                throw new ClientSideException(ExceptionMessages.ConcurrencyException);
+            }
             if (updateMV.Photo != null)
             {
                 _imageHelper.DeleteImage(oldpPortfolio!.FileName);

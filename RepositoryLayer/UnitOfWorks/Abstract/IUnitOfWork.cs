@@ -6,7 +6,7 @@ namespace RepositoryLayer.UnitOfWorks.Abstract
     public interface IUnitOfWork
     {
         void Commit();
-        Task CommitAsync();
+        Task<bool> CommitAsync();
         ValueTask DisposeAsync();
 
         IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : class, IBaseEntity, new();
