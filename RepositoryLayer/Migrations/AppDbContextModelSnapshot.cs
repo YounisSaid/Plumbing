@@ -47,6 +47,22 @@ namespace RepositoryLayer.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "40C9B336-098C-4B39-B039-CB6E5A66803D",
+                            ConcurrencyStamp = "29d7bf33-c89a-4ed6-8a32-48921a05c9cc",
+                            Name = "SuperAdmin",
+                            NormalizedName = "SUPERADMIN"
+                        },
+                        new
+                        {
+                            Id = "70552DF1-CB86-4D03-89C3-3DC76CC5B580",
+                            ConcurrencyStamp = "2a1c673c-90d4-42a2-9017-644915150dee",
+                            Name = "Member",
+                            NormalizedName = "MEMBER"
+                        });
                 });
 
             modelBuilder.Entity("EntityLayer.Identity.Entites.AppUser", b =>
@@ -118,6 +134,38 @@ namespace RepositoryLayer.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "B1D61281-1273-4F2F-867F-BE9ADE0377A6",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "10cb05c4-0193-42c3-9f47-f7658a585b92",
+                            Email = "test.plumbing.mvc@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "YOUNISSAID",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFHuBNttWSByS+COjXn1P3IECIHtycMTRBJicjtxbuge5RXcpI5/ivf2XrOdwImdJg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "26bc20fb-5870-4d7f-843a-57ccef73198b",
+                            TwoFactorEnabled = false,
+                            UserName = "YounisSaid"
+                        },
+                        new
+                        {
+                            Id = "77EBB6A6-7426-4C99-9A5B-F1975438F764",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "aab90318-51d0-4703-a03d-783c86c6acaa",
+                            Email = "test.plumbing.mvc1@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "YOUSSEFRAMADAN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAqEzHw+p5kUp9TeaXBhcDL9AS/tzXNJ8ETYmdkIz3AQUHnJVgzm3qkAfwIGWVe+WA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "9189242b-0d68-4065-96e9-fbfc9e018f23",
+                            TwoFactorEnabled = false,
+                            UserName = "YoussefRamadan"
+                        });
                 });
 
             modelBuilder.Entity("EntityLayer.WebApplication.Entites.About", b =>
@@ -185,14 +233,14 @@ namespace RepositoryLayer.Migrations
                     b.HasIndex("SocialMediaID")
                         .IsUnique();
 
-                    b.ToTable("Abouts", (string)null);
+                    b.ToTable("Abouts");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             Clients = 5,
-                            CreatedAt = "2/9/2026",
+                            CreatedAt = "2/9/2025",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. In nibh mauris cursus mattis molestie a iaculis at erat. Odio ut enim blandit volutpat maecenas volutpat blandit aliquam etiam. Suspendisse sed nisi lacus sed viverra tellus in. Amet volutpat consequat mauris nunc congue. Diam maecenas sed enim ut sem. Et magnis dis parturient montes nascetur. Morbi tempus iaculis urna id volutpat lacus laoreet. Urna condimentum mattis pellentesque id nibh tortor id. Fames ac turpis egestas maecenas pharetra convallis posuere. Nunc mi ipsum faucibus vitae aliquet.",
                             FileName = "test",
                             FileType = "test",
@@ -234,19 +282,19 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CreatedAt = "2/9/2026",
+                            CreatedAt = "2/9/2025",
                             Name = "Projects"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = "2/9/2026",
+                            CreatedAt = "2/9/2025",
                             Name = "SiteWorks"
                         });
                 });
@@ -296,14 +344,14 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contacts", (string)null);
+                    b.ToTable("Contacts");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             Call = "01012365898",
-                            CreatedAt = "2/9/2026",
+                            CreatedAt = "2/9/2025",
                             Email = "test@try.com",
                             Location = "Iron streen, Brave Avenue, KD1 2CF, London",
                             Map = "TestLink Here"
@@ -349,13 +397,13 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HomePages", (string)null);
+                    b.ToTable("HomePages");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CreatedAt = "2/9/2026",
+                            CreatedAt = "2/9/2025",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. In nibh mauris cursus mattis molestie a iaculis at erat. Odio ut enim blandit volutpat maecenas volutpat blandit aliquam etiam.",
                             Header = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                             VideoLink = "Test Video Link"
@@ -405,14 +453,14 @@ namespace RepositoryLayer.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Portofolios", (string)null);
+                    b.ToTable("Portofolios");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             CategoryId = 1,
-                            CreatedAt = "2/9/2026",
+                            CreatedAt = "2/9/2025",
                             FileName = "Test",
                             FileType = "test",
                             Title = "Test Picture"
@@ -421,7 +469,7 @@ namespace RepositoryLayer.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
-                            CreatedAt = "2/9/2026",
+                            CreatedAt = "2/9/2025",
                             FileName = "Test2",
                             FileType = "test2",
                             Title = "Test Picture2"
@@ -430,7 +478,7 @@ namespace RepositoryLayer.Migrations
                         {
                             Id = 3,
                             CategoryId = 2,
-                            CreatedAt = "2/9/2026",
+                            CreatedAt = "2/9/2025",
                             FileName = "Test3",
                             FileType = "test3",
                             Title = "Test Picture3"
@@ -439,7 +487,7 @@ namespace RepositoryLayer.Migrations
                         {
                             Id = 4,
                             CategoryId = 2,
-                            CreatedAt = "2/9/2026",
+                            CreatedAt = "2/9/2025",
                             FileName = "Test4",
                             FileType = "test4",
                             Title = "Test Picture4"
@@ -486,13 +534,13 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Services", (string)null);
+                    b.ToTable("Services");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CreatedAt = "2/9/2026",
+                            CreatedAt = "2/9/2025",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. In nibh mauris cursus mattis molestie a iaculis at erat. Odio ut enim blandit volutpat maecenas volutpat blandit aliquam etiam.",
                             Icon = "bi bi-service1",
                             Name = "Plumbing Service 1"
@@ -500,7 +548,7 @@ namespace RepositoryLayer.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = "2/9/2026",
+                            CreatedAt = "2/9/2025",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. In nibh mauris cursus mattis molestie a iaculis at erat. Odio ut enim blandit volutpat maecenas volutpat blandit aliquam etiam.",
                             Icon = "bi bi-service2",
                             Name = "Plumbing Service 2"
@@ -508,7 +556,7 @@ namespace RepositoryLayer.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = "2/9/2026",
+                            CreatedAt = "2/9/2025",
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. In nibh mauris cursus mattis molestie a iaculis at erat. Odio ut enim blandit volutpat maecenas volutpat blandit aliquam etiam.",
                             Icon = "bi bi-service3",
                             Name = "Plumbing Service 3"
@@ -552,13 +600,13 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SocialMedias", (string)null);
+                    b.ToTable("SocialMedias");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CreatedAt = "2/9/2026",
+                            CreatedAt = "2/9/2025",
                             Facebook = "testFacebook",
                             Instagram = "testInstagram"
                         });
@@ -619,13 +667,13 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teams", (string)null);
+                    b.ToTable("Teams");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CreatedAt = "2/9/2026",
+                            CreatedAt = "2/9/2025",
                             Facebook = "facebook",
                             FileName = "test",
                             FileType = "test",
@@ -683,14 +731,14 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Testimonials", (string)null);
+                    b.ToTable("Testimonials");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             Comment = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. In nibh mauris cursus mattis molestie a iaculis at erat. Odio ut enim blandit volutpat maecenas volutpat blandit aliquam etiam.",
-                            CreatedAt = "2/9/2026",
+                            CreatedAt = "2/9/2025",
                             FileName = "test",
                             FileType = "test",
                             FullName = "Merlyn Monroe",
@@ -700,7 +748,7 @@ namespace RepositoryLayer.Migrations
                         {
                             Id = 2,
                             Comment = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. In nibh mauris cursus mattis molestie a iaculis at erat. Odio ut enim blandit volutpat maecenas volutpat blandit aliquam etiam.",
-                            CreatedAt = "2/9/2026",
+                            CreatedAt = "2/9/2025",
                             FileName = "test",
                             FileType = "test",
                             FullName = "Jackie Chan",
@@ -710,7 +758,7 @@ namespace RepositoryLayer.Migrations
                         {
                             Id = 3,
                             Comment = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. In nibh mauris cursus mattis molestie a iaculis at erat. Odio ut enim blandit volutpat maecenas volutpat blandit aliquam etiam.",
-                            CreatedAt = "2/9/2026",
+                            CreatedAt = "2/9/2025",
                             FileName = "test",
                             FileType = "test",
                             FullName = "Bruce Wills",
@@ -798,11 +846,20 @@ namespace RepositoryLayer.Migrations
                     b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(34)
+                        .HasColumnType("nvarchar(34)");
+
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasDiscriminator().HasValue("IdentityUserRole<string>");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -822,6 +879,25 @@ namespace RepositoryLayer.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("EntityLayer.Identity.Entites.AppUserRole", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<string>");
+
+                    b.HasDiscriminator().HasValue("AppUserRole");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "B1D61281-1273-4F2F-867F-BE9ADE0377A6",
+                            RoleId = "40C9B336-098C-4B39-B039-CB6E5A66803D"
+                        },
+                        new
+                        {
+                            UserId = "77EBB6A6-7426-4C99-9A5B-F1975438F764",
+                            RoleId = "70552DF1-CB86-4D03-89C3-3DC76CC5B580"
+                        });
                 });
 
             modelBuilder.Entity("EntityLayer.WebApplication.Entites.About", b =>
