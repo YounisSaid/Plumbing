@@ -12,11 +12,13 @@ using ServiceLayer.Serviecs.Identity.Abstract;
 
 namespace Plumbing.MVC.Areas.User.Controllers
 {
+    [Authorize(Roles = "SuperAdmin,Member")]
     [Area("User")]
-    [Authorize]
+
     public class AuthenticationUserController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
         private readonly IValidator<UserEditMV> _userEditValidator;
         private readonly IAuthenticationUserService _authenticationUserService;
         private readonly IToastNotification _toasty;
@@ -24,12 +26,14 @@ namespace Plumbing.MVC.Areas.User.Controllers
         public AuthenticationUserController(UserManager<AppUser> userManager,
             IValidator<UserEditMV> userEditValidator,
             IAuthenticationUserService authenticationUserService,
-            IToastNotification toasty)
+            IToastNotification toasty,
+            SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
             _userEditValidator = userEditValidator;
             _authenticationUserService = authenticationUserService;
             _toasty = toasty;
+            _signInManager = signInManager;
         }
 
         [HttpGet]
@@ -61,6 +65,12 @@ namespace Plumbing.MVC.Areas.User.Controllers
             _toasty.AddInfoToastMessage(NotificationMessagesIdentity.UserEdit(user.UserName!), new ToastrOptions { Title = NotificationMessagesIdentity.SuccessedTitle });
             return RedirectToAction("Index", "Dashboard", new { Area = "User" });
 
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return Redirect("/Home/Index");
         }
 
 

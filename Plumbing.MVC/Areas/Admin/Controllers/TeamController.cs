@@ -2,6 +2,7 @@
 using EntityLayer.WebApplication.ViewModels.Team;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Filters.WebApplication;
 using ServiceLayer.Serviecs.WebApplication.Abstract;
@@ -9,6 +10,7 @@ using ServiceLayer.Serviecs.WebApplication.Abstract;
 namespace Plumbing.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "SuperAdmin")]
     public class TeamController : Controller
     {
         private readonly ITeamService _teamService;

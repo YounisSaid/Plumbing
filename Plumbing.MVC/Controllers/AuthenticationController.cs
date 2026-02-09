@@ -80,7 +80,7 @@ namespace Plumbing.MVC.Controllers
         {
             return View();
         }
-
+        [HttpPost]
         public async Task<IActionResult> Login(LoginMV input, string? returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Action("Index", "Dashboard", new { Area = "User" });
