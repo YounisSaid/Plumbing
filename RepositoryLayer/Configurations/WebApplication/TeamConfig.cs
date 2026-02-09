@@ -19,6 +19,7 @@ namespace RepositoryLayer.Configurations.WebApplication
                 Instagram = "instagram",
                 FileName = "test",
                 FileType = "test",
+                CreatedAt = "2/9/2025"
 
             });
             base.Configure(builder);

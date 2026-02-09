@@ -19,6 +19,7 @@ namespace RepositoryLayer.Configurations.WebApplication
                 FileName = "Test",
                 FileType = "test",
                 Title = "Test Picture",
+                CreatedAt = "2/9/2025"
 
             }, new Portfolio
             {
@@ -27,6 +28,7 @@ namespace RepositoryLayer.Configurations.WebApplication
                 FileName = "Test2",
                 FileType = "test2",
                 Title = "Test Picture2",
+                CreatedAt = "2/9/2025"
 
             }, new Portfolio
             {
@@ -35,6 +37,7 @@ namespace RepositoryLayer.Configurations.WebApplication
                 FileName = "Test3",
                 FileType = "test3",
                 Title = "Test Picture3",
+                CreatedAt = "2/9/2025"
 
             }, new Portfolio
             {
@@ -43,6 +46,7 @@ namespace RepositoryLayer.Configurations.WebApplication
                 FileName = "Test4",
                 FileType = "test4",
                 Title = "Test Picture4",
+                CreatedAt = "2/9/2025"
 
             });
 

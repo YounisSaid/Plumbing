@@ -28,6 +28,7 @@ namespace RepositoryLayer.Configurations.WebApplication
                 FileName = "test",
                 FileType = "test",
                 SocialMediaID = 1,
+                CreatedAt = "2/9/2025"
             });
             base.Configure(builder);
         }

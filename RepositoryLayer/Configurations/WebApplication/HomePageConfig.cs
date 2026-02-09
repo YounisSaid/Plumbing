@@ -22,7 +22,7 @@ namespace RepositoryLayer.Configurations.WebApplication
                 Header = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. In nibh mauris cursus mattis molestie a iaculis at erat. Odio ut enim blandit volutpat maecenas volutpat blandit aliquam etiam.",
                 VideoLink = "Test Video Link",
-
+                CreatedAt = "2/9/2025"
             });
             base.Configure(builder);
         }

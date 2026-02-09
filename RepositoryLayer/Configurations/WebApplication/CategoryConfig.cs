@@ -14,10 +14,12 @@ namespace RepositoryLayer.Configurations.WebApplication
             {
                 Id = 1,
                 Name = "Projects",
+                CreatedAt = "2/9/2025"
             }, new Category
             {
                 Id = 2,
                 Name = "SiteWorks",
+                CreatedAt = "2/9/2025"
             });
 
             base.Configure(builder);

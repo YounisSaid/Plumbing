@@ -5,8 +5,8 @@ namespace EntityLayer.WebApplication.ViewModels.About
     public class AboutListMV
     {
         public int Id { get; set; }
-        public  string CreatedAt { get; set; } = DateTime.Now.ToString("d");
-        public  string? UpdatedAt { get; set; } 
+        public string CreatedAt { get; set; } = null!;
+        public string? UpdatedAt { get; set; }
         public string Header { get; set; } = null!;
         public string Description { get; set; } = null!;
         public int Clients { get; set; }

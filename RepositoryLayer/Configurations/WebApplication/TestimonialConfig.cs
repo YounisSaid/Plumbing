@@ -19,7 +19,7 @@ namespace RepositoryLayer.Configurations.WebApplication
                 FullName = "Merlyn Monroe",
                 FileName = "test",
                 FileType = "test",
-                CreatedAt = DateTime.Now.ToString("d")
+                CreatedAt = "2/9/2025"
             }, new Testimonial
             {
                 Id = 2,
@@ -28,7 +28,7 @@ namespace RepositoryLayer.Configurations.WebApplication
                 FullName = "Jackie Chan",
                 FileName = "test",
                 FileType = "test",
-                CreatedAt = DateTime.Now.ToString("d")
+                CreatedAt = "2/9/2025"
             }, new Testimonial
             {
                 Id = 3,
@@ -37,6 +37,7 @@ namespace RepositoryLayer.Configurations.WebApplication
                 FullName = "Bruce Wills",
                 FileName = "test",
                 FileType = "test",
+                CreatedAt = "2/9/2025"
             });
             base.Configure(builder);
         }

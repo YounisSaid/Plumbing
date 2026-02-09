@@ -11,6 +11,7 @@ namespace RepositoryLayer.Configurations.WebApplication
                 Id = 1,
                 Facebook = "testFacebook",
                 Instagram = "testInstagram",
+                CreatedAt = "2/9/2025"
 
             });
             base.Configure(builder);

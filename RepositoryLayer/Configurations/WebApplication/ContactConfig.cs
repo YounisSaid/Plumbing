@@ -18,7 +18,7 @@ namespace RepositoryLayer.Configurations.WebApplication
                 Email = "test@try.com",
                 Location = "Iron streen, Brave Avenue, KD1 2CF, London",
                 Map = "TestLink Here",
-
+                CreatedAt = "2/9/2025"
             });
             base.Configure(builder);
         }
