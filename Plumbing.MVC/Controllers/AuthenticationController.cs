@@ -9,6 +9,7 @@ using NToastNotify;
 using ServiceLayer.Helpers.Identity.ModelStateHelper;
 using ServiceLayer.Messages.Identity;
 using ServiceLayer.Serviecs.Identity.Abstract;
+using System.Security.Claims;
 
 namespace Plumbing.MVC.Controllers
 {
@@ -68,6 +69,27 @@ namespace Plumbing.MVC.Controllers
             {
                 ViewBag.Result = "Failed";
                 ModelState.AddModelStateListErrors(userCreatedResult.Errors);
+                return View(input);
+            }
+
+            //Assign Role
+            var assignRole = await _userManager.AddToRoleAsync(user, "Member");
+            if (!assignRole.Succeeded)
+            {
+                await _userManager.DeleteAsync(user);
+                ViewBag.Result = "Failed";
+                ModelState.AddModelStateListErrors(assignRole.Errors);
+                return View(input);
+            }
+            //Assign Claim
+            var claim = new Claim("AdminObserverExpireDate", DateTime.Now.AddDays(-1).ToString());
+            var assignClaim = await _userManager.AddClaimAsync(user, claim);
+            if (!assignClaim.Succeeded)
+            {
+                await _userManager.RemoveFromRoleAsync(user, "Member");
+                await _userManager.DeleteAsync(user);
+                ViewBag.Result = "Failed";
+                ModelState.AddModelStateListErrors(assignClaim.Errors);
                 return View(input);
             }
             _toasty.AddSuccessToastMessage(NotificationMessagesIdentity.SignUp(user.UserName!), new ToastrOptions { Title = NotificationMessagesIdentity.SuccessedTitle });
