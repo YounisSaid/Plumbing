@@ -1,0 +1,94 @@
+﻿@model List<UserVM>
+@{
+	ViewData["Title"] = "GetUserList";
+	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h5 class="card-title">User List</h5>
+
+<nav>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
+	</ol>
+</nav>
+
+<div class="card">
+	<div class="card-body">
+
+		<!-- Table with hoverable rows -->
+		<table class="table table-hover">
+			<thead>
+				<tr>
+
+					<th scope="col">UserName</th>
+					<th scope="col">Email</th>
+					<th scope="col">Role</th>
+					<th scope="col">Claim</th>
+					<th scope="col">Claim Expire Date</th>
+
+				</tr>
+			</thead>
+			<tbody>
+
+				@foreach (var item in Model)
+				{
+					<tr>
+
+						<td>@item.UserName</td>
+						<td>@item.Email</td>
+						@if (@item.UserRoles.FirstOrDefault() == null)
+						{
+							<td>No Role</td>
+
+						}
+						else
+						{
+							<td>@item.UserRoles.FirstOrDefault()</td>
+
+						}
+
+						@if (@item.UserClaims!.FirstOrDefault() == null)
+						{
+							<td>No Claim</td>
+
+						}
+						else
+						{
+							@if (Convert.ToDateTime(@item.UserClaims!.FirstOrDefault()!.Value) < DateTime.Now)
+							{
+								<td>
+									<a asp-area="Admin" asp-controller="UserList" asp-action="ExtendClaim" class="btn btn-warning btn-sm"> Extend Claim</a>
+								</td>
+							}
+							else
+							{
+								<td>Claim is Valid</td>
+							}
+
+
+						}
+						@if (@item.UserClaims!.FirstOrDefault() == null)
+						{
+							<td>No Claim</td>
+
+						}
+						else if (Convert.ToDateTime(@item.UserClaims!.FirstOrDefault()!.Value) < DateTime.Now)
+						{
+							<td>Claim is Expired</td>
+						}
+						else
+						{
+							<td>@item.UserClaims!.FirstOrDefault()!.Value</td>
+						}
+
+
+					</tr>
+				}
+			</tbody>
+		</table>
+
+		
+		
+
+	</div>
+</div>
