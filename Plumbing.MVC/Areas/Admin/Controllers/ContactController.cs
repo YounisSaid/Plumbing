@@ -9,7 +9,7 @@ using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace Plumbing.MVC.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "SuperAdmin")]
+    [Authorize(Policy = "AdminObserver")]
     [Area("Admin")]
     public class ContactController : Controller
     {
@@ -72,7 +72,7 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
             return RedirectToAction(nameof(GetContactList), "Contact", new { Area = "Admin" });
         }
 
-
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> DeleteContact(int Id)
         {
             await _contactService.DeleteContactAsync(Id);

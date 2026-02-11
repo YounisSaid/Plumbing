@@ -5,7 +5,7 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
 {
     public class DashboardController : Controller
     {
-        [Authorize(Roles = "SuperAdmin")]
+        [Authorize(Policy = "AdminObserver")]
         [Area("Admin")]
         public IActionResult Index()
         {

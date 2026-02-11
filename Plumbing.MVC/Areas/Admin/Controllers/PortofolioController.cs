@@ -9,7 +9,7 @@ using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace Plumbing.MVC.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "SuperAdmin")]
+    [Authorize(Policy = "AdminObserver")]
     [Area("Admin")]
     public class PortfolioController : Controller
     {
@@ -70,7 +70,7 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
             await _portfolioService.UpdatePortfolioAsync(model);
             return RedirectToAction(nameof(GetPortfolioList), "Portfolio", new { Area = "Admin" });
         }
-
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> DeletePortfolio(int Id)
         {
             await _portfolioService.DeletePortfolioAsync(Id);

@@ -9,7 +9,7 @@ using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace Plumbing.MVC.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "SuperAdmin")]
+    [Authorize(Policy = "AdminObserver")]
     [Area("Admin")]
     public class HomePageController : Controller
     {
@@ -71,7 +71,7 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
             await _homePageService.UpdateHomePageAsync(model);
             return RedirectToAction(nameof(GetHomePageList), "HomePage", new { Area = "Admin" });
         }
-
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> DeleteHomePage(int Id)
         {
             await _homePageService.DeleteHomePageAsync(Id);

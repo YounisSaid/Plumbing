@@ -9,7 +9,7 @@ using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace Plumbing.MVC.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "SuperAdmin")]
+    [Authorize(Policy = "AdminObserver")]
     [Area("Admin")]
     public class TestimonialController : Controller
     {
@@ -70,7 +70,7 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
             await _testimonialService.UpdateTestimonialAsync(model);
             return RedirectToAction(nameof(GetTestimonialList), "Testimonial", new { Area = "Admin" });
         }
-
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> DeleteTestimonial(int Id)
         {
             await _testimonialService.DeleteTestimonialAsync(Id);

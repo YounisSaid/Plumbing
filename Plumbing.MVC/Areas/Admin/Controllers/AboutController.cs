@@ -9,7 +9,7 @@ using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace Plumbing.MVC.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "SuperAdmin")]
+    [Authorize(Policy = "AdminObserver")]
     [Area("Admin")]
     public class AboutController : Controller
     {
@@ -75,7 +75,7 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
             return View(model);
         }
 
-
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> DeleteAbout(int Id)
         {
             await _aboutService.DeleteAboutAsync(Id);

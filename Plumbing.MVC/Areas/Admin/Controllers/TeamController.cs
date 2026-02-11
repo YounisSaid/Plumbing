@@ -9,8 +9,8 @@ using ServiceLayer.Serviecs.WebApplication.Abstract;
 
 namespace Plumbing.MVC.Areas.Admin.Controllers
 {
+    [Authorize(Policy = "AdminObserver")]
     [Area("Admin")]
-    [Authorize(Roles = "SuperAdmin")]
     public class TeamController : Controller
     {
         private readonly ITeamService _teamService;
@@ -70,7 +70,7 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
             await _teamService.UpdateTeamAsync(model);
             return RedirectToAction(nameof(GetTeamList), "Team", new { Area = "Admin" });
         }
-
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> DeleteTeam(int Id)
         {
             await _teamService.DeleteTeamAsync(Id);

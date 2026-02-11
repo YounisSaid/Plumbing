@@ -1,5 +1,6 @@
 ﻿using EntityLayer.Identity.Entites;
 using EntityLayer.Identity.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +9,7 @@ using RepositoryLayer.Context;
 using ServiceLayer.Customization.Identity.ErrorDescriber;
 using ServiceLayer.Customization.Identity.Validators;
 using ServiceLayer.Helpers.Identity.EmailHelper;
+using ServiceLayer.Requirements;
 
 namespace ServiceLayer.Extension.Identity
 {
@@ -48,6 +50,16 @@ namespace ServiceLayer.Extension.Identity
             services.Configure<DataProtectionTokenProviderOptions>(opt =>
                                                                    opt.TokenLifespan = TimeSpan.FromMinutes(60));
             services.Configure<GmailInformationVM>(configuration.GetSection("EmailSettings"));
+
+            services.AddScoped<IAuthorizationHandler, AdminObserverRequirementHandler>();
+
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("AdminObserver", policy =>
+                {
+                    policy.AddRequirements(new AdminObserverRequirement());
+                });
+            });
 
             return services;
         }
