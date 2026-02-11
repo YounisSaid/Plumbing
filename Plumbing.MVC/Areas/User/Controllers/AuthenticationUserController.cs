@@ -61,7 +61,7 @@ namespace Plumbing.MVC.Areas.User.Controllers
                 ModelState.AddModelStateListErrors(userEditResult.Errors);
                 return View();
             }
-            ViewBag.Username = user!.UserName;
+            ViewBag.id = user!.Id;
             _toasty.AddInfoToastMessage(NotificationMessagesIdentity.UserEdit(user.UserName!), new ToastrOptions { Title = NotificationMessagesIdentity.SuccessedTitle });
             return RedirectToAction("Index", "Dashboard", new { Area = "User" });
 

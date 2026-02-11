@@ -98,8 +98,18 @@ namespace Plumbing.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string? errorMessage)
         {
+            if (errorMessage != null && errorMessage == IdentityValidationMessages.SecurityStampError)
+            {
+                _toasty.AddErrorToastMessage(errorMessage, new ToastrOptions { Title = NotificationMessagesIdentity.FailedTitle });
+                return View();
+            }
+
+            if (errorMessage != null)
+            {
+                return Redirect("/Error/PageNotFound");
+            }
             return View();
         }
         [HttpPost]

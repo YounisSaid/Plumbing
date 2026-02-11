@@ -1,6 +1,7 @@
 using NToastNotify;
 using RepositoryLayer.Extensions;
 using ServiceLayer.Extension;
+using ServiceLayer.Middlewares.Identity;
 
 namespace Plumbing.MVC
 {
@@ -28,6 +29,7 @@ namespace Plumbing.MVC
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseStatusCodePagesWithReExecute("/Error/PageNotFound");
             app.UseExceptionHandler("/Error/GeneralExceptions");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -35,6 +37,7 @@ namespace Plumbing.MVC
             app.UseRouting();
             app.UseAuthorization();
             app.UseAuthorization();
+            app.UseMiddleware<SecurityStampCheck>();
 
 #pragma warning disable ASP0014
             app.UseEndpoints(endpoints =>

@@ -17,13 +17,13 @@ namespace Plumbing.MVC.Areas.User.Components
             _userManager = userManager;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(string Username)
+        public async Task<IViewComponentResult> InvokeAsync(string id)
         {
-            if (Username is null)
+            if (id is null)
             {
-                Username = User.Identity!.Name!;
+                id = UserClaimsPrincipal.Claims.FirstOrDefault(c => c.Type.Contains("identifier"))!.Value;
             }
-            var user = await _userManager.FindByNameAsync(Username);
+            var user = await _userManager.FindByIdAsync(id);
 
             if (user!.FileName is null)
             {

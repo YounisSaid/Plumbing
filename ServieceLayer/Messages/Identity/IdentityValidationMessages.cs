@@ -2,6 +2,7 @@
 {
     public static class IdentityValidationMessages
     {
+        public const string SecurityStampError = "Your Critical Information Has Been Changed ,Please Try To Login!!";
         public static string CheckEmail()
         {
             return "Value Should be in Email Format";

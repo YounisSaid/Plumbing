@@ -24,5 +24,10 @@ namespace Plumbing.MVC.Controllers
             }
             return View(new ErrorVM("Server Error!! Please Contact Your Admin", 500));
         }
+
+        public IActionResult PageNotFound()
+        {
+            return View();
+        }
     }
 }
