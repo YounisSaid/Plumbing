@@ -20,7 +20,7 @@
 			<thead>
 				<tr>
 
-					<th scope="col">UserName</th>
+					<th scope="col">Username</th>
 					<th scope="col">Email</th>
 					<th scope="col">Role</th>
 					<th scope="col">Claim</th>
@@ -34,7 +34,7 @@
 				{
 					<tr>
 
-						<td>@item.UserName</td>
+						<td>@item.Username</td>
 						<td>@item.Email</td>
 						@if (@item.UserRoles.FirstOrDefault() == null)
 						{
@@ -57,7 +57,7 @@
 							@if (Convert.ToDateTime(@item.UserClaims!.FirstOrDefault()!.Value) < DateTime.Now)
 							{
 								<td>
-									<a asp-area="Admin" asp-controller="UserList" asp-action="ExtendClaim" class="btn btn-warning btn-sm"> Extend Claim</a>
+									<a asp-area="Admin" asp-controller="UserList" asp-action="ExtendClaim" asp-route-username="@item.Username" class="btn btn-warning btn-sm"> Extend Claim For Five Days</a>
 								</td>
 							}
 							else
@@ -78,7 +78,7 @@
 						}
 						else
 						{
-							<td>@item.UserClaims!.FirstOrDefault()!.Value</td>
+							<td>@Convert.ToDateTime(@item.UserClaims!.FirstOrDefault()!.Value).ToShortDateString()</td>
 						}
 
 
