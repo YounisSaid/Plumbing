@@ -106,5 +106,12 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
             _imageHelper.DeleteImage(portfolio!.FileName);
             _toasty.AddWarningToastMessage(NotificationMessagesWebApplication.DeleteMessage(Section), new ToastrOptions { Title = NotificationMessagesWebApplication.WarningTitle });
         }
+
+        //Services For Ui
+        public async Task<List<PortfolioListMVForUi>> GetAllListForUiAsync()
+        {
+            var portfoliosUi = await _portfolioRepository.GetAll().ProjectTo<PortfolioListMVForUi>(_mapper.ConfigurationProvider).ToListAsync();
+            return portfoliosUi;
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace ServiceLayer.Serviecs.WebApplication.Abstract
         Task AddCategoryAsync(CategoryAddMV addMV);
         Task UpdateCategoryAsync(CategoryUpdateMV updateMV);
         Task DeleteCategoryAsync(int id);
+        Task<List<CategoryListMVForUi>> GetAllListForUiAsync();
     }
 }

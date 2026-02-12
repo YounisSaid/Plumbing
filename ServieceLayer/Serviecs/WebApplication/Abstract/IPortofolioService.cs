@@ -9,5 +9,6 @@ namespace ServiceLayer.Serviecs.WebApplication.Abstract
         Task AddPortfolioAsync(PortfolioAddMV addMV);
         Task UpdatePortfolioAsync(PortfolioUpdateMV updateMV);
         Task DeletePortfolioAsync(int id);
+        Task<List<PortfolioListMVForUi>> GetAllListForUiAsync();
     }
 }

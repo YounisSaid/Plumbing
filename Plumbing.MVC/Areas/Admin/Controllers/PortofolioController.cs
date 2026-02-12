@@ -14,14 +14,16 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
     public class PortfolioController : Controller
     {
         private readonly IPortfolioService _portfolioService;
+        private readonly ICategoryService _categoryService;
         private readonly IValidator<PortfolioAddMV> _portfolioAddValidator;
         private readonly IValidator<PortfolioUpdateMV> _portfolioUpdateValidator;
 
-        public PortfolioController(IPortfolioService portfolioService, IValidator<PortfolioAddMV> portfolioAddValidator, IValidator<PortfolioUpdateMV> portfolioUpdateValidator)
+        public PortfolioController(IPortfolioService portfolioService, IValidator<PortfolioAddMV> portfolioAddValidator, IValidator<PortfolioUpdateMV> portfolioUpdateValidator, ICategoryService categoryService)
         {
             _portfolioService = portfolioService;
             _portfolioAddValidator = portfolioAddValidator;
             _portfolioUpdateValidator = portfolioUpdateValidator;
+            _categoryService = categoryService;
         }
 
         public async Task<IActionResult> GetPortfolioList()
@@ -33,7 +35,9 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> AddPortfolio()
         {
-            return View();
+
+            var categories = await _categoryService.GetAllListAsync();
+            return View(new PortfolioAddMV { CategoryList = categories });
         }
 
         [HttpPost]
@@ -55,6 +59,8 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
         public async Task<IActionResult> UpdatePortfolio(int Id)
         {
             var portfolio = await _portfolioService.GetByIdAsync(Id);
+            var categories = await _categoryService.GetAllListAsync();
+            portfolio!.CategoryList = categories;
             return View(portfolio);
         }
 
