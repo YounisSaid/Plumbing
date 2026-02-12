@@ -8,9 +8,10 @@ namespace ServiceLayer.AutoMapper.WebApplication
     {
         public HomePageMapper()
         {
-            CreateMap<HomePage,HomePageAddMV>().ReverseMap();
-            CreateMap<HomePage,HomePageUpdateMV>().ReverseMap();
-            CreateMap<HomePage,HomePageListMV>().ReverseMap();
+            CreateMap<HomePage, HomePageAddMV>().ReverseMap();
+            CreateMap<HomePage, HomePageUpdateMV>().ReverseMap();
+            CreateMap<HomePage, HomePageListMV>().ReverseMap();
+            CreateMap<HomePage, HomePageListMVForUi>().ReverseMap();
         }
 
 

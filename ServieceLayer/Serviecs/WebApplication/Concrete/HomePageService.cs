@@ -72,5 +72,12 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
             await _unitOfWork.CommitAsync();
             _toasty.AddWarningToastMessage(NotificationMessagesWebApplication.DeleteMessage(Section), new ToastrOptions { Title = NotificationMessagesWebApplication.WarningTitle });
         }
+
+        //Ui Services
+        public async Task<List<HomePageListMVForUi>> GetAllListForUiAsync()
+        {
+            var homePages = await _homePageRepository.GetAll().ProjectTo<HomePageListMVForUi>(_mapper.ConfigurationProvider).ToListAsync();
+            return homePages;
+        }
     }
 }

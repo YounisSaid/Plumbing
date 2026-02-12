@@ -9,5 +9,6 @@ namespace ServiceLayer.Serviecs.WebApplication.Abstract
         Task AddHomePageAsync(HomePageAddMV addMV);
         Task UpdateHomePageAsync(HomePageUpdateMV updateMV);
         Task DeleteHomePageAsync(int id);
+        Task<List<HomePageListMVForUi>> GetAllListForUiAsync();
     }
 }
