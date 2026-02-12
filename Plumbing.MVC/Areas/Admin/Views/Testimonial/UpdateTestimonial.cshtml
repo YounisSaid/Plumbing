@@ -35,7 +35,7 @@
             <form asp-area="Admin" asp-controller="Testimonial" asp-action="UpdateTestimonial" method="post" class="row g-3" enctype="multipart/form-data">
                 <input type="hidden" asp-for="Id" />
                 <input type="hidden" asp-for="RowVersion" />
-              
+                <input type="hidden" asp-for="FileName" />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="col-md-6">
@@ -62,6 +62,8 @@
                 <div class="col-md-12">
                     <div class="form-floating">
                         <input asp-for="Photo" accept="image/*" type="file" class="form-control" placeholder="Photo">
+                        <label asp-for="Photo">Upload New Photo (Optional)</label>
+
                     </div>
                 </div>
 

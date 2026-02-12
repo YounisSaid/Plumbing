@@ -20,6 +20,7 @@
 <div class="row">
     <!-- Card with an image on top -->
     <div class="col-lg-4 card">
+
         <img src="~/images/@Model.FileName" class="card-img-top" alt="Team Member">
 
     </div>
@@ -32,6 +33,7 @@
             @* Hidden fields for Id and RowVersion are essential for update operations *@
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="RowVersion" />
+            <input type="hidden" asp-for="FileName" />
 
             @* Keep hidden fields for properties that must be submitted but aren't edited directly (like file metadata or CategoryId) *@
             
@@ -50,7 +52,7 @@
                     <div class="form-floating">
                         <select asp-for="CategoryId" asp-items="@(new SelectList(Model.CategoryList, "Id", "Name"))" class="form-control" placeholder="Category Name"></select>
                         <span asp-validation-for="CategoryId" class="text-danger"></span>
-                        <label asp-for="CategoryId">Call</label>
+                        <label asp-for="CategoryId">Category</label>
                     </div>
                     </div>
 
@@ -69,4 +71,5 @@
             </div>
         </form>
     </div>
+</div>
 </div>

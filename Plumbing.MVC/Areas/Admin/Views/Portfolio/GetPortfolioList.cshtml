@@ -37,7 +37,15 @@
                         <td>@item.Title</td>
                         <td>@item.Category.Name</td>
                         <td>@item.CreatedAt</td>
-                        <td>@item.UpdatedAt</td>
+                        @if (!string.IsNullOrEmpty(@item.UpdatedAt))
+                        {
+
+                            <td>@item.UpdatedAt</td>
+                        }
+                        else
+                        {
+                            <td>Not Updated Yet</td>
+                        }
                         <td><a asp-area="Admin" asp-controller="Portfolio" asp-action="UpdatePortfolio" asp-route-id="@item.Id" data-id="@item.Id" class="btn btn-warning btn-sm">Edit</a></td>
                         <td><a asp-area="Admin" asp-controller="Portfolio" asp-action="DeletePortfolio" asp-route-id="@item.Id" data-id="@item.Id" class="btn btn-danger btn-sm">Delete</a></td>
 

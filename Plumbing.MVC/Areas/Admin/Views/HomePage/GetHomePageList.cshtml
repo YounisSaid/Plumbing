@@ -46,7 +46,15 @@
                         }
 
                         <td>@item.CreatedAt</td>
-                        <td>@item.UpdatedAt</td>
+                        @if (!string.IsNullOrEmpty(@item.UpdatedAt))
+                        {
+
+                            <td>@item.UpdatedAt</td>
+                        }
+                        else
+                        {
+                            <td>Not Updated Yet</td>
+                        }
 
                         <td>
                             <a asp-area="Admin" asp-controller="HomePage" asp-action="UpdateHomePage" asp-route-id="@item.Id" data-id="@item.Id" class="btn btn-warning btn-sm"> Edit</a>

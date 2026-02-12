@@ -9,7 +9,7 @@ namespace RepositoryLayer.Configurations.WebApplication
         {
             builder.Property(c => c.Location).IsRequired().HasMaxLength(150);
             builder.Property(c => c.Email).IsRequired().HasMaxLength(100);
-            builder.Property(c => c.Call).IsRequired().HasMaxLength(11);
+            builder.Property(c => c.Call).IsRequired().HasMaxLength(20);
             builder.Property(c => c.Map).IsRequired().HasMaxLength(300);
             builder.HasData(new Contact
             {

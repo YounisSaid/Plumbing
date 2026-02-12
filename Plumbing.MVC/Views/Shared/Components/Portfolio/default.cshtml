@@ -1,6 +1,5 @@
 ﻿@model List<PortfolioListMVForUi>
-<!-- ======= Portfolio Section ======= -->
-<!-- ======= Portfolio Section ======= -->
+
 <section id="portfolio" class="portfolio">
     <div class="container">
 
@@ -14,16 +13,22 @@
         <div class="row portfolio-container">
             @foreach (var item in Model)
             {
-                <div class="col-lg-4 col-md-6 portfolio-item filter-@item.Category.Name">
-                    <img src="~/images/@item.FileName" class="img-fluid" alt="Portfolio of Plumbing">
-                    <div class="portfolio-info">
-                        <h4>@item.Title</h4>
+                // Must match the logic used in the Category component exactly
+                var filterClass = item.Category.Name.ToLower().Replace(" ", "-").Replace("/", "-");
+
+                <div class="col-lg-4 col-md-6 portfolio-item filter-@filterClass">
+                    <div style="margin-bottom: 20px; overflow: hidden; border-radius: 8px; border: 1px solid #ddd; background: #fff;">
+                        <img src="~/images/@item.FileName"
+                             style="width: 100%; height: 250px; object-fit: cover; display: block;"
+                             class="img-fluid"
+                             alt="@item.Title">
+                        <div class="portfolio-info" style="padding: 15px; background: #f8f9fa; border-top: 1px solid #eee;">
+                            <h4 style="font-size: 18px; margin: 0; color: #333;">@item.Title</h4>
+                            <p style="font-size: 14px; color: #777; margin: 5px 0 0 0;">@item.Category.Name</p>
+                        </div>
                     </div>
                 </div>
             }
-
-
         </div>
-
     </div>
-</section><!-- End Portfolio Section -->
+</section>

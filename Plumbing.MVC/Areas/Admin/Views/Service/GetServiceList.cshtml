@@ -20,8 +20,6 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    @* Assuming Id is often displayed or used for reference in admin tables *@
-                    <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Created Date</th>
                     <th scope="col">Updated Date</th>
@@ -37,7 +35,15 @@
                         <th scope="row">@item.Id</th>
                         <td>@item.Name</td>
                         <td>@item.CreatedAt</td>
-                        <td>@item.UpdatedAt</td>
+                        @if (!string.IsNullOrEmpty(@item.UpdatedAt))
+                        {
+
+                            <td>@item.UpdatedAt</td>
+                        }
+                        else
+                        {
+                            <td>Not Updated Yet</td>
+                        }
                         <td>
                             <a asp-area="Admin" asp-controller="Service" asp-action="UpdateService" asp-route-id="@item.Id" data-id="@item.Id" class="btn btn-warning btn-sm"> Edit</a>
                         </td>

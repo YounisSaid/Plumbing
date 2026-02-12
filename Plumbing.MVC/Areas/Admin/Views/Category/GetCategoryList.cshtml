@@ -8,7 +8,7 @@
 
 <nav>
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
         <li class="breadcrumb-item active">Category</li>
     </ol>
 </nav>
@@ -37,7 +37,15 @@
                     <tr>
                         <td>@item.Name</td>
                         <td>@item.CreatedAt</td>
-                        <td>@item.UpdatedAt</td>
+                        @if (!string.IsNullOrEmpty(@item.UpdatedAt))
+                        {
+
+                            <td>@item.UpdatedAt</td>
+                        }
+                        else
+                        {
+                            <td>Not Updated Yet</td>
+                        }
                         <td><a asp-area="Admin" asp-controller="Category" asp-action="UpdateCategory" asp-route-id="@item.Id" data-id="@item.Id" class="btn btn-warning btn-sm"> Edit</a></td>
                         <td><a asp-area="Admin" asp-controller="Category" asp-action="DeleteCategory" asp-route-id="@item.Id" data-id="@item.Id" class="btn btn-danger btn-sm"> Delete</a></td>
 

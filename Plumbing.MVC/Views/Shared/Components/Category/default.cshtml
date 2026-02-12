@@ -6,8 +6,9 @@
             <li data-filter="*" class="filter-active">All</li>
             @foreach (var item in Model)
             {
-                <li data-filter=".filter-@item.Name">@item.Name</li>
-
+                // Create a CSS-safe slug: lowercase and replace spaces/slashes with hyphens
+                var filterSlug = item.Name.ToLower().Replace(" ", "-").Replace("/", "-");
+                <li data-filter=".filter-@filterSlug">@item.Name</li>
             }
         </ul>
     </div>

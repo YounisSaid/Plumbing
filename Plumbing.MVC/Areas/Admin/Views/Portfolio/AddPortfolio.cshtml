@@ -35,7 +35,7 @@
                 <div class="form-floating">
                     <select asp-for="CategoryId" asp-items="@(new SelectList(Model.CategoryList, "Id", "Name"))" class="form-control" placeholder="Category Name"></select>
                     <span asp-validation-for="CategoryId" class="text-danger"></span>
-                    <label asp-for="CategoryId">Call</label>
+                    <label asp-for="CategoryId">Category</label>
                 </div>
                 </div>
             

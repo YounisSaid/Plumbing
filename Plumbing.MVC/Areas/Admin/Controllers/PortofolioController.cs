@@ -47,6 +47,7 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
             if (!ValidationResult.IsValid)
             {
                 ValidationResult.AddToModelState(ModelState);
+                model.CategoryList = await _categoryService.GetAllListAsync();
                 return View(model);
             }
             await _portfolioService.AddPortfolioAsync(model);
@@ -70,7 +71,10 @@ namespace Plumbing.MVC.Areas.Admin.Controllers
             var ValidationResult = await _portfolioUpdateValidator.ValidateAsync(model);
             if (!ValidationResult.IsValid)
             {
+
+
                 ValidationResult.AddToModelState(ModelState);
+                model.CategoryList = await _categoryService.GetAllListAsync();
                 return View(model);
             }
             await _portfolioService.UpdatePortfolioAsync(model);
