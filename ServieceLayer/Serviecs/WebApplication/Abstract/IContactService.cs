@@ -9,5 +9,6 @@ namespace ServiceLayer.Serviecs.WebApplication.Abstract
         Task AddContactAsync(ContactAddMV addMV);
         Task UpdateContactAsync(ContactUpdateMV updateMV);
         Task DeleteContactAsync(int id);
+        Task<List<ContactListMVForUi>> GetAllListForUiAsync();
     }
 }
