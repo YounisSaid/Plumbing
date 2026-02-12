@@ -46,5 +46,10 @@ namespace RepositoryLayer.Repositories.Concrete
         {
             return _dbSet.Where(predicate).AsNoTracking().AsQueryable();
         }
+
+        public async Task<int> GetAllCountAsync()
+        {
+            return await _dbSet.CountAsync();
+        }
     }
 }

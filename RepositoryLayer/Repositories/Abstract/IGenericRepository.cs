@@ -11,5 +11,6 @@ namespace RepositoryLayer.Repositories.Abstract
         void Update(TEntity entity);
         void Delete(TEntity entity);
         public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate);
+        Task<int> GetAllCountAsync();
     }
 }
