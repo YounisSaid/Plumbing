@@ -1,8 +1,8 @@
+using NLog.Web;
 using NToastNotify;
 using RepositoryLayer.Extensions;
 using ServiceLayer.Extension;
 using ServiceLayer.Middlewares.Identity;
-
 namespace Plumbing.MVC
 {
     public class Program
@@ -19,6 +19,10 @@ namespace Plumbing.MVC
             });
             builder.Services.LoadRepositoryLayerExtensions(builder.Configuration);
             builder.Services.LoadServiceLayerExtensions(builder.Configuration);
+
+            // NLog: Setup NLog for Dependency injection
+            builder.Logging.ClearProviders();
+            builder.Host.UseNLog();
 
             var app = builder.Build();
 

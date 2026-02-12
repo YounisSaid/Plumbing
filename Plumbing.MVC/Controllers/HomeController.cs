@@ -1,6 +1,6 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Plumbing.MVC.Models;
+using System.Diagnostics;
 
 namespace Plumbing.MVC.Controllers
 {
