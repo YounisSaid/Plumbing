@@ -9,5 +9,6 @@ namespace ServiceLayer.Serviecs.WebApplication.Abstract
         Task AddTeamAsync(TeamAddMV addMV);
         Task UpdateTeamAsync(TeamUpdateMV updateMV);
         Task DeleteTeamAsync(int id);
+        Task<List<TeamListMVForUi>> GetAllListForUiAsync();
     }
 }

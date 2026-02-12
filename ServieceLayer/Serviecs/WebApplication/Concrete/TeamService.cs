@@ -108,5 +108,12 @@ namespace ServiceLayer.Serviecs.WebApplication.Concrete
             _imageHelper.DeleteImage(team!.FileName);
             _toasty.AddWarningToastMessage(NotificationMessagesWebApplication.DeleteMessage(Section), new ToastrOptions { Title = NotificationMessagesWebApplication.WarningTitle });
         }
+
+        //Services For Ui
+        public async Task<List<TeamListMVForUi>> GetAllListForUiAsync()
+        {
+            var teamsUi = await _teamRepository.GetAll().ProjectTo<TeamListMVForUi>(_mapper.ConfigurationProvider).ToListAsync();
+            return teamsUi;
+        }
     }
 }

@@ -8,9 +8,10 @@ namespace ServiceLayer.AutoMapper.WebApplication
     {
         public TeamMapper()
         {
-            CreateMap<Team,TeamAddMV>().ReverseMap();
-            CreateMap<Team,TeamUpdateMV>().ReverseMap();
-            CreateMap<Team,TeamListMV>().ReverseMap();
+            CreateMap<Team, TeamAddMV>().ReverseMap();
+            CreateMap<Team, TeamUpdateMV>().ReverseMap();
+            CreateMap<Team, TeamListMV>().ReverseMap();
+            CreateMap<Team, TeamListMVForUi>().ReverseMap();
         }
 
 
