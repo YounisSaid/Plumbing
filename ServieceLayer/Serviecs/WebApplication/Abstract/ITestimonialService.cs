@@ -9,5 +9,6 @@ namespace ServiceLayer.Serviecs.WebApplication.Abstract
         Task AddTestimonialAsync(TestimonialAddMV addMV);
         Task UpdateTestimonialAsync(TestimonialUpdateMV updateMV);
         Task DeleteTestimonialAsync(int id);
+        Task<List<TestimonialListMVForUi>> GetAllListForUiAsync();
     }
 }
