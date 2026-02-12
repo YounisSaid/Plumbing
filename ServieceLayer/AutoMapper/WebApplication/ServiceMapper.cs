@@ -8,9 +8,10 @@ namespace ServiceLayer.AutoMapper.WebApplication
     {
         public ServiceMapper()
         {
-            CreateMap<Service,ServiceAddMV>().ReverseMap();
-            CreateMap<Service,ServiceUpdateMV>().ReverseMap();
-            CreateMap<Service,ServiceListMV>().ReverseMap();
+            CreateMap<Service, ServiceAddMV>().ReverseMap();
+            CreateMap<Service, ServiceUpdateMV>().ReverseMap();
+            CreateMap<Service, ServiceListMV>().ReverseMap();
+            CreateMap<Service, ServiceListMVForUi>().ReverseMap();
         }
 
 

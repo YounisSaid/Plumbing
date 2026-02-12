@@ -9,5 +9,6 @@ namespace ServiceLayer.Serviecs.WebApplication.Abstract
         Task AddServiceAsync(ServiceAddMV addMV);
         Task UpdateServiceAsync(ServiceUpdateMV updateMV);
         Task DeleteServiceAsync(int id);
+        Task<List<ServiceListMVForUi>> GetAllListForUiAsync();
     }
 }
