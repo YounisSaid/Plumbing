@@ -8,12 +8,13 @@ namespace ServiceLayer.AutoMapper.WebApplication
     {
         public AboutMapper()
         {
-              CreateMap<About, AboutAddVM>().ReverseMap();
-              CreateMap<About, AboutUpdateVM>().ReverseMap();
-              CreateMap<About, AboutListMV>().ReverseMap();
+            CreateMap<About, AboutAddVM>().ReverseMap();
+            CreateMap<About, AboutUpdateVM>().ReverseMap();
+            CreateMap<About, AboutListMV>().ReverseMap();
+            CreateMap<About, AboutListMVForUi>().ReverseMap();
 
         }
 
-       
+
     }
 }
