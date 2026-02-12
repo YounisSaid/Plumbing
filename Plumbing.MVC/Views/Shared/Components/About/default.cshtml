@@ -1,58 +1,72 @@
 ﻿@model List<AboutListMVForUi>
-<!-- ======= About Section ======= -->
 @foreach (var item in Model)
 {
-	<section id="about" class="about">
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+        <div class="container">
 
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-6">
-					<img src="~/images/@item.FileName" class="img-fluid" alt="Plumbing Company">
-				</div>
-				<div class="col-lg-6 pt-4 pt-lg-0 content">
-					<h3>@item.Header</h3>
-					<p class="fst-italic">
-						@item.Description
-					</p>
-					
-				</div>
-			</div>
+            <div class="row">
+                <div class="col-lg-6 ">
+                    <img src="~/images/@item.FileName" class="img-fluid" alt="Plumbing Company">
+                    <div class="social">
+                        @if (item.SocialMedia.Twitter != null || item.SocialMedia.Twitter == string.Empty)
+                        {
+                            <a href="@item.SocialMedia.Twitter"><i class="bi bi-twitter"></i></a>
+                        }
+                        @if (item.SocialMedia.Facebook != null || item.SocialMedia.Facebook == string.Empty)
+                        {
+                            <a href="@item.SocialMedia.Facebook"><i class="bi bi-facebook"></i></a>
+                        }
+                        @if (item.SocialMedia.Instagram != null || item.SocialMedia.Instagram == string.Empty)
+                        {
+                            <a href="@item.SocialMedia.Instagram"><i class="bi bi-instagram"></i></a>
+                        }
+                        @if (item.SocialMedia.LinkedIn != null || item.SocialMedia.LinkedIn == string.Empty)
+                        {
+                            <a href="@item.SocialMedia.LinkedIn"><i class="bi bi-linkedin"></i></a>
+                        }
+                    </div>
+                </div>
+                <div class="col-lg-6 pt-4 pt-lg-0 content">
+                    <h3>@item.Header</h3>
+                    <p class="fst-italic">@item.Description</p>
+                </div>
+            </div>
 
-		</div>
-	</section>
+        </div>
+    </section>
 
-	<!-- End About Section -->
-	<!-- ======= Counts Section ======= -->
-	<section id="counts" class="counts">
-		<div class="container">
+    <!-- End About Section -->
+    <!-- ======= Counts Section ======= -->
+    <section id="counts" class="counts">
+        <div class="container">
 
-			<div class="row counters">
+            <div class="row counters">
 
-				<div class="col-lg-3 col-6 text-center">
-					<span data-purecounter-start="0" data-purecounter-end=@item.Clients data-purecounter-duration="1" class="purecounter"></span>
-					<p>Clients</p>
-				</div>
+                <div class="col-lg-3 col-6 text-center">
+                    <span data-purecounter-start="0" data-purecounter-end=@item.Clients data-purecounter-duration="1" class="purecounter"></span>
+                    <p>Clients</p>
+                </div>
 
-				<div class="col-lg-3 col-6 text-center">
-					<span data-purecounter-start="0" data-purecounter-end=@item.Projects data-purecounter-duration="1" class="purecounter"></span>
-					<p>Projects</p>
-				</div>
+                <div class="col-lg-3 col-6 text-center">
+                    <span data-purecounter-start="0" data-purecounter-end=@item.Projects data-purecounter-duration="1" class="purecounter"></span>
+                    <p>Projects</p>
+                </div>
 
-				<div class="col-lg-3 col-6 text-center">
-					<span data-purecounter-start="0" data-purecounter-end=@item.HoursOfSupport data-purecounter-duration="1" class="purecounter"></span>
-					<p>Hours Of Support</p>
-				</div>
+                <div class="col-lg-3 col-6 text-center">
+                    <span data-purecounter-start="0" data-purecounter-end=@item.HoursOfSupport data-purecounter-duration="1" class="purecounter"></span>
+                    <p>Hours Of Support</p>
+                </div>
 
-				<div class="col-lg-3 col-6 text-center">
-					<span data-purecounter-start="0" data-purecounter-end=@item.HardWorkers data-purecounter-duration="1" class="purecounter"></span>
-					<p>Hard Workers</p>
-				</div>
+                <div class="col-lg-3 col-6 text-center">
+                    <span data-purecounter-start="0" data-purecounter-end=@item.HardWorkers data-purecounter-duration="1" class="purecounter"></span>
+                    <p>Hard Workers</p>
+                </div>
 
-			</div>
+            </div>
 
-		</div>
-	</section>
+        </div>
+    </section>
 
-	<!-- End Counts Section -->
+    <!-- End Counts Section -->
 }
-
