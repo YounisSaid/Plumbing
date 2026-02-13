@@ -35,7 +35,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a asp-controller="Dashboard" asp-action="Index" class="logo d-flex align-items-center">
                 <img src="~/Admin/assets/img/folder.png" alt="">
                 <span class="d-none d-lg-block">@User.Identity!.Name</span>
             </a>

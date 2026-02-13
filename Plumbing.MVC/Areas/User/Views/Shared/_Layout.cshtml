@@ -36,7 +36,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a asp-controller="Dashboard" asp-action="Index" class="logo d-flex align-items-center">
                 <img src="~/Admin/assets/img/Scroll.png" alt="UserDashboard">
                 <span class="d-none d-lg-block">@User.Identity!.Name</span>
             </a>
@@ -59,7 +59,7 @@
             @await Component.InvokeAsync("Layout",ViewBag.id) 
 
             <li class="nav-item">
-                <a class="nav-link" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                <a class="nav-link" asp-area="User" asp-controller="Dashboard" asp-action="Index">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
