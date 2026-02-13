@@ -16,20 +16,20 @@ namespace RepositoryLayer.Configurations.WebApplication
             builder.Property(a => a.FileType).IsRequired();
             builder.Property(a => a.FileName).IsRequired();
 
-            //builder.HasData(new About
-            //{
-            //    Id = 1,
-            //    Header = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            //    Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. In nibh mauris cursus mattis molestie a iaculis at erat. Odio ut enim blandit volutpat maecenas volutpat blandit aliquam etiam. Suspendisse sed nisi lacus sed viverra tellus in. Amet volutpat consequat mauris nunc congue. Diam maecenas sed enim ut sem. Et magnis dis parturient montes nascetur. Morbi tempus iaculis urna id volutpat lacus laoreet. Urna condimentum mattis pellentesque id nibh tortor id. Fames ac turpis egestas maecenas pharetra convallis posuere. Nunc mi ipsum faucibus vitae aliquet.",
-            //    Clients = 5,
-            //    Projects = 5,
-            //    HoursOfSupport = 150,
-            //    HardWorkers = 3,
-            //    FileName = "test",
-            //    FileType = "test",
-            //    SocialMediaID = 1,
-            //    CreatedAt = "2/9/2025"
-            //});
+            builder.HasData(new About
+            {
+                Id = 1,
+                Header = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. In nibh mauris cursus mattis molestie a iaculis at erat. Odio ut enim blandit volutpat maecenas volutpat blandit aliquam etiam. Suspendisse sed nisi lacus sed viverra tellus in. Amet volutpat consequat mauris nunc congue. Diam maecenas sed enim ut sem. Et magnis dis parturient montes nascetur. Morbi tempus iaculis urna id volutpat lacus laoreet. Urna condimentum mattis pellentesque id nibh tortor id. Fames ac turpis egestas maecenas pharetra convallis posuere. Nunc mi ipsum faucibus vitae aliquet.",
+                Clients = 5,
+                Projects = 5,
+                HoursOfSupport = 150,
+                HardWorkers = 3,
+                FileName = "test",
+                FileType = "test",
+                SocialMediaID = 1,
+                CreatedAt = "2/9/2025"
+            });
             base.Configure(builder);
         }
     }
