@@ -6,14 +6,14 @@ namespace RepositoryLayer.Configurations.WebApplication
     {
         public override void Configure(EntityTypeBuilder<SocialMedia> builder)
         {
-            builder.HasData(new SocialMedia
-            {
-                Id = 1,
-                Facebook = "testFacebook",
-                Instagram = "testInstagram",
-                CreatedAt = "2/9/2025"
+            //builder.HasData(new SocialMedia
+            //{
+            //    Id = 1,
+            //    Facebook = "testFacebook",
+            //    Instagram = "testInstagram",
+            //    CreatedAt = "2/9/2025"
 
-            });
+            //});
             base.Configure(builder);
         }
     }
